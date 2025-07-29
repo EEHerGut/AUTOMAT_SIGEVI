@@ -1,0 +1,7 @@
+.venv  
+.vscode
+features/__pycache__
+features/pages/__pycache__
+features/screenshots
+features/steps/__pycache__
+requirements.txt
