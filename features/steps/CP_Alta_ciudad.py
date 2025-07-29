@@ -37,12 +37,15 @@ def step_impl(context):
 
    estado = CIUDAD['state']
    municipio = CIUDAD['town']
-    
+   time.sleep(3)
+   context.driver.refresh()
+   context.driver.execute_script("document.body.style.zoom='80%'") 
    context.ciudad_page = CiudadPage(context.driver)
-
- 
+   time.sleep(3)
+   context.ciudad_page.click_agregar_ciudad()
+   time.sleep(3)
+   context.ciudad_page.seleccionar_estado(estado)
    context.ciudad_page \
-        .seleccionar_estado(estado) \
         .seleccionar_municipio(municipio) \
         .guardar_ciudad() \
 

@@ -5,6 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from config import VUELO,NUMERO_COMISIÓN,ESTATUS_COMISIÓN
 from pages.all_page import AllPage
+import time
 
 origen=VUELO["origen"]
 destino=VUELO["arrive"]
@@ -34,6 +35,13 @@ def step_impl(context):
 @when('Agregar datos de vuelo, seleccionar agregar y selecionar Aceptar - Aceptar')
 def step_impl(context):
     vuelo_page = VuelosPage(context.driver)
+    time.sleep(2)
+    context.driver.refresh()
+    context.driver.execute_script("document.body.style.zoom='80%'") 
+    time.sleep(2)
+    vuelo_page.click_agregar_vuelo()
+    vuelo_page.seleccionar_tipo_vuelo(VUELO['trip'])
+    time.sleep(2)
     vuelo_page.ingresar_datos_vuelo(origen,destino,aerolinea)
     vuelo_page.guardar_vuelo()
     vuelo_page.refresh_page()
