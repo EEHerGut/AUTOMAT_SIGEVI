@@ -1,5 +1,6 @@
 .venv  
 .vscode
+config.py
 features/__pycache__
 features/pages/__pycache__
 features/screenshots
