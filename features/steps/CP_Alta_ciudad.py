@@ -39,6 +39,8 @@ def step_impl(context):
    municipio = CIUDAD['town']
     
    context.ciudad_page = CiudadPage(context.driver)
+
+ 
    context.ciudad_page \
         .seleccionar_estado(estado) \
         .seleccionar_municipio(municipio) \

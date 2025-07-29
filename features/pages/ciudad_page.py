@@ -26,8 +26,9 @@ class CiudadPage(BasePage):
         return self
     
     def seleccionar_estado(self, estado):
-        
-        time.sleep(5)
+        time.sleep(3)
+        estado_dropdown = self.find_element(self.ESTADO_DROPDOWN_ID)
+        time.sleep(3)
         estado_dropdown = self.find_element(self.ESTADO_DROPDOWN_ID)
         Select(estado_dropdown).select_by_visible_text(estado)
         return self
