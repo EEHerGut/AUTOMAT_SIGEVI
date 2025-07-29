@@ -2,6 +2,7 @@ Feature: Autorizar Solicitud
     ##Rol:Operador 
     ##Quiero: Dar de alta una solicitud nacional/internacional sin anticipo 
     ##Para: Atender una comisión
+    ##Hola
         
     Scenario: Autorizar solicitud
         Given El usuario se encuentra en el grid de comisiones autorizar
