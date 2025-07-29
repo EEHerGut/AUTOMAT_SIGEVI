@@ -41,7 +41,7 @@ def step_impl(context):
    context.driver.refresh()
    context.driver.execute_script("document.body.style.zoom='80%'") 
    context.ciudad_page = CiudadPage(context.driver)
-   time.sleep(3)
+   time.sleep(2)
    context.ciudad_page.click_agregar_ciudad()
    time.sleep(3)
    context.ciudad_page.seleccionar_estado(estado)
@@ -52,7 +52,7 @@ def step_impl(context):
             
 @Then('La ciudad se agrega correctamente')
 def step_impl(context):     
-     time.sleep(2)
+     time.sleep(1)
      context.ciudad_page.verificar_creacion_exitosa()
-     time.sleep(3)
+     time.sleep(1)
      assert context.ciudad_page.cerrar_mensaje_exito()
