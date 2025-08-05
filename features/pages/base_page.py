@@ -1,7 +1,6 @@
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.by import By
-from selenium.common.exceptions import TimeoutException
+from config import TIEMPOS_ESPERA
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
@@ -14,6 +13,10 @@ class BasePage:
         self.driver = driver
         self.timeout = timeout
         self.wait = WebDriverWait(driver, timeout)
+        self.DEFAULT_WAIT = TIEMPOS_ESPERA['DEFAULT_WAIT']
+        self.LONG_WAIT = TIEMPOS_ESPERA['LONG_WAIT']
+        self.SHORT_WAIT = TIEMPOS_ESPERA['SHORT_WAIT']
+    
     
     def find_element(self, locator):
         """Encuentra un elemento esperando a que sea visible"""
@@ -26,7 +29,9 @@ class BasePage:
     def click(self, locator):
         """Hace click en un elemento después de esperar que sea clickeable"""
         self.wait.until(EC.element_to_be_clickable(locator)).click()
-    
+   
+
+
     def send_keys(self, locator, text):
         """Limpia el campo y escribe el texto"""
         element = self.find_element(locator)
@@ -98,5 +103,18 @@ class BasePage:
             return self.is_visible(self.SESSION_MARKER["UI_MARKER"])
         except:
          return False
+        
+    def wait_for_element(self, locator, timeout=10):
+        """Espera a que un elemento sea visible y lo retorna"""
+        return WebDriverWait(self.driver, timeout).until(
+            EC.visibility_of_element_located(locator))
+    
+    def wait_and_click(self, locator, timeout):
+        """Espera a que un elemento sea clickeable y hace click"""
+        element = WebDriverWait(self.driver, timeout).until(
+            EC.element_to_be_clickable(locator))
+        element.click()
+        return self
+    
             
    

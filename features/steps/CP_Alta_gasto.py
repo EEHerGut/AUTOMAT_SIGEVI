@@ -1,15 +1,11 @@
 from behave import *
-from selenium.webdriver.support.ui import Select
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.by import By
 from config import GASTO,NUMERO_COMISIÓN,ESTATUS_COMISIÓN
 from pages.gasto_page import GastosPage
 from pages.all_page import AllPage
 
 @given('Visualizar el grid de comisiones gasto')
 def step_impl(context):
+     context.gasto_page = GastosPage(context.driver)
      context.all_page = AllPage(context.driver)
      context.all_page.menu_comision()
      context.all_page.buscar_comision(NUMERO_COMISIÓN)
@@ -17,24 +13,15 @@ def step_impl(context):
 
 @When('Seleccionar el menu de gasto')
 def step_impl(context):
-   
-    gasto_page = GastosPage(context.driver)
-    gasto_page.seleccionar_menu_gastos()
-
-
-
+    context.gasto_page.seleccionar_menu_gastos()
 @When('Dar clic en el botón Agregar gasto, seleccionar tipo de gasto, monto y dar clic en agregar')
 def step_impl(context):
-    gasto_page = GastosPage(context.driver)
-    gasto_page.click_agregar_gasto()
 
-    gasto_page.seleccionar_tipo_gasto(GASTO['concept'])    
-    gasto_page.agregar_monto(GASTO['amount'])
-    gasto_page.guardar_gasto()
-
-   
-    context.driver.refresh() 
-    context.driver.execute_script("document.body.style.zoom='80%'")
+    context.gasto_page.click_agregar_gasto()
+    context.gasto_page.seleccionar_tipo_gasto(GASTO['concept'])    
+    context.gasto_page.agregar_monto(GASTO['amount'])
+    context.gasto_page.guardar_gasto()
+    context.all_page.refresh_page()
     
     assert context.failed is False
 

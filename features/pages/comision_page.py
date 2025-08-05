@@ -1,12 +1,10 @@
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.by import By
 from selenium.webdriver.common.by import By
 from .base_page import BasePage
 import time
 
 class ComisionPage(BasePage):
     # Element locators
-    MENU_COMISIONES = (By.XPATH, "//a[contains(text(), 'Comisiones')]")
+  
     BOTON_NUEVA_SOLICITUD = (By.XPATH, "//app-commissions//button[contains(text(), 'Crear') or contains(text(), ' Nueva solicitud ')]")
     TITULO_FORMULARIO = (By.XPATH, "//h4[contains(text(), 'Solicitud de comisión')]")
     CHECKBOX_ANTICIPO = (By.ID, "check2")
@@ -23,9 +21,7 @@ class ComisionPage(BasePage):
     MODAL_EXITO = (By.XPATH, "//*[@id='resultModal']/div/div/div[1]/h4")
     BOTON_CERRAR_MODAL = (By.XPATH, "//*[@id='resultModal']/div/div/div[3]/button")
 
-    def ir_a_comisiones(self):
-        """Navega al panel de comisiones"""
-        self.click(self.MENU_COMISIONES)
+
 
     def click_nueva_solicitud(self):
         """Hace clic en el botón de nueva solicitud"""
@@ -55,8 +51,9 @@ class ComisionPage(BasePage):
 
     def guardar_solicitud(self):
         """Guarda la solicitud y confirma la acción"""
-        self.click(self.BOTON_GUARDAR)
-        self.click(self.BOTON_CONFIRMAR_GUARDAR)
+        self.wait_and_click(self.BOTON_GUARDAR, self.DEFAULT_WAIT)
+        self.wait_and_click(self.BOTON_CONFIRMAR_GUARDAR, self.DEFAULT_WAIT)
+        return self
 
     def verificar_creacion_exitosa(self):
         """Verifica que la solicitud se creó correctamente"""

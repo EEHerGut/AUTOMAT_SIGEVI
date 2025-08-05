@@ -23,18 +23,25 @@ ARCHIVOS = {
 
 
 
-NUMERO_COMISIÓN = '786'
+NUMERO_COMISIÓN = '00819'
 ESTATUS_COMISIÓN = 'Solicitud de comisión en registro'
+
+TIEMPOS_ESPERA = {
+    'DEFAULT_WAIT': 15,  # Espera normal para elementos interactivos
+    'LONG_WAIT': 30,     # Espera más larga para elementos críticos o lentos
+    'SHORT_WAIT': 5      # Espera corta para verificaciones rápidas
+}
+
 
 #mainc048 - mainc044 - uedga193
 USUARIOS = {
     "OPERADOR_SIGEVI": {
-        "usuario": "uedga193",
+        "usuario": "mainc044",
         "password": "B@40bR4$1607202$",
         "rol": "Operador SIGEVI"
     },
     "Autorizador_SIGEVI": {
-        "usuario": "uedga193",
+        "usuario": "mainc044",
         "password": "B@40bR4$1607202$",
         "rol": "Autorizador SIGEVI"
     }
@@ -75,11 +82,11 @@ GASTO = {
 SOLICITUDES = {
     "SIN_ANTICIPO": {
         "con_anticipo": "No", 
-        "expediente": "112313",
+        "expediente": "108510",
         "tipo_comision": "NACIONAL",
         "transporte": "Avión",
-        "fecha_salida": "07/2025/14",
-        "fecha_regreso": "07/2025/16",
+        "fecha_salida": "07/2025/25",
+        "fecha_regreso": "07/2025/27",
         "expediente_autoriza": "48496",
         "area_gasto": "220000",
         "objetivo": "Comisión con anticipo nacional "

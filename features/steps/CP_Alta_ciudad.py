@@ -1,11 +1,8 @@
 import time
 from behave import *
-from selenium.webdriver.support.ui import Select
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.by import By
-from config import CIUDAD
+from config import CIUDAD,NUMERO_COMISIÓN,ESTATUS_COMISIÓN
 from pages.ciudad_page import CiudadPage
-from pages.comision_page import ComisionPage
+from pages.all_page import AllPage
 
 @given('El usuario se encuentra en el grid de comisiones ciudad')
 def step_impl(context):
@@ -14,33 +11,29 @@ def step_impl(context):
 
 @given('la solicitud esta con estatus "Solicitud de comisión en registro" ciudad y selecionar la comisión para agregar ciudad')
 def step_impl(context):
-    
-    context.execute_steps('''
-            Given Visualizar el grid de comisiones
-            When Agregar numero de comisión
-            Then Visualizar la comisión y dar clic en detalle
-        ''')
+     context.ciudad_page = CiudadPage(context.driver)
+     context.all_page = AllPage(context.driver)
+     context.all_page.menu_comision()
+     context.all_page.buscar_comision(NUMERO_COMISIÓN)
+     context.all_page.seleccionar_comision(ESTATUS_COMISIÓN)
 
 @when('Seleccionar menu de ciudades')
 def step_impl(context):
     
-    context.ciudad_page = CiudadPage(context.driver)
     context.ciudad_page.seleccionar_menu_ciudades()
 
 @when('Dar clic en el boton Agregar municipio')
 def step_impl(context):
-    context.ciudad_page = CiudadPage(context.driver)
+    
     context.ciudad_page.click_agregar_ciudad()
 
 @when('Agregar municipio')
 def step_impl(context):     
-
    estado = CIUDAD['state']
    municipio = CIUDAD['town']
+
    time.sleep(3)
-   context.driver.refresh()
-   context.driver.execute_script("document.body.style.zoom='80%'") 
-   context.ciudad_page = CiudadPage(context.driver)
+   context.all_page.refresh_page()
    time.sleep(3)
    context.ciudad_page.click_agregar_ciudad()
    time.sleep(3)
@@ -51,7 +44,7 @@ def step_impl(context):
 
             
 @Then('La ciudad se agrega correctamente')
-def step_impl(context):     
+def step_impl(context):  
      time.sleep(2)
      context.ciudad_page.verificar_creacion_exitosa()
      time.sleep(3)

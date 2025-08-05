@@ -72,10 +72,6 @@ class AutorizarPage:
             EC.element_to_be_clickable(self.ACEPTAR_BUTTON)
         ).click()
  
-    def refresh_page(self):
-        self.driver.refresh()
-        self.driver.execute_script("document.body.style.zoom='80%'")
-
     def navegar_a_comisiones(self):
         """Navega directamente a la página de comisiones"""
         if not self.driver.current_url.startswith(URLS['COMISIONES']):

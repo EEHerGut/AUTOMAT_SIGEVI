@@ -55,7 +55,6 @@ class AllPage(BasePage):
         boton = WebDriverWait(self.driver, self.timeout).until(
                 EC.element_to_be_clickable(self.BOTON_ESTADO(estado_esperado))
             )
-        
         boton.click()
 
   def validar_registro_tabla(self, datos_esperados, locator_tabla, timeout=15):
@@ -194,3 +193,8 @@ class AllPage(BasePage):
                     self._tomar_screenshot("dropdown_fallido")
                     raise Exception(f"No se pudo cargar el dropdown {locator} después de {max_reintentos} intentos")
                 time.sleep(delay)
+                
+  def refresh_page(self):
+        self.driver.refresh()
+        self.driver.execute_script("document.body.style.zoom='80%'")
+    
