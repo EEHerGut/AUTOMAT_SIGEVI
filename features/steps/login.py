@@ -1,16 +1,12 @@
 import pickle
 from venv import logger
 from behave import *
-from selenium import webdriver
-from selenium.webdriver.support.ui import Select
+
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.chrome.options import Options
 from config import USUARIOS,PATHS
 from features.pages.login_page import LoginPage
-import os
 import time
 
 @given('Hemos abierto la página inicial del sistema login')

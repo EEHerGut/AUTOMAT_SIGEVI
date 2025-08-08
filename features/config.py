@@ -23,7 +23,7 @@ ARCHIVOS = {
 
 
 
-NUMERO_COMISIÓN = '00819'
+NUMERO_COMISIÓN = '00826'
 ESTATUS_COMISIÓN = 'Solicitud de comisión en registro'
 
 TIEMPOS_ESPERA = {

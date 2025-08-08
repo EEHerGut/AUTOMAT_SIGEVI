@@ -14,8 +14,7 @@ def step_impl(context):
             )
         )
         texto_actual = elemento.text.strip()
-        ##print(f"Texto encontrado: {texto_actual}") 
-
+        
         if any(texto in texto_actual for texto in textos_esperados):
             context.login_exitoso = True
 
