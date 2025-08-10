@@ -20,10 +20,11 @@ ARCHIVOS = {
 }
 #635 nacional
 #636 internacional 786 785 783 781 780 
+#Solicitud de comisión en registro
+#Comisión pendiente de comprobación
+#Solicitud de comisión pendiente de autorización
 
-
-
-NUMERO_COMISIÓN = '00826'
+NUMERO_COMISIÓN = '00850'
 ESTATUS_COMISIÓN = 'Solicitud de comisión en registro'
 
 TIEMPOS_ESPERA = {
@@ -124,4 +125,9 @@ IMPUESTO = {
         "monto": "230.32"
 }
 
-
+COMPROBACION ={
+        "concepto":"Alimentos",
+        "monto":"436.17",
+        "concepto_impuesto": "19",
+        "monto_impuesto":"129.41"
+}

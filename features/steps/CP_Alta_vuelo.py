@@ -9,14 +9,17 @@ destino=VUELO["arrive"]
 aerolinea=VUELO["aeroline"]
 
 
-@given('Visualizar el grid de comisiones vuelo')
-def step_impl(context):
-    
+@given('Visualizar el grid de comisiones vuelo con estatus "{estatus}"')
+def step_impl(context,estatus):
+
+
     context.all_page = AllPage(context.driver)
     context.vuelo_page = VuelosPage(context.driver)
+    time.sleep(1)
     context.all_page.menu_comision()
+    time.sleep(2)
     context.all_page.buscar_comision(NUMERO_COMISIÓN)
-    context.all_page.seleccionar_comision(ESTATUS_COMISIÓN)
+    context.all_page.seleccionar_comision(estatus)
 
   
 @when('Seleccionar el menu de vuelos')

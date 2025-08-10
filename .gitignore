@@ -6,3 +6,7 @@ features/pages/__pycache__
 features/screenshots
 features/steps/__pycache__
 requirements.txt
+/logs/
+*.log
+/reports/
+performance_metrics.csv

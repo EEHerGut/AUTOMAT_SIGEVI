@@ -4,18 +4,20 @@ from config import CIUDAD,NUMERO_COMISIÓN,ESTATUS_COMISIÓN
 from pages.ciudad_page import CiudadPage
 from pages.all_page import AllPage
 
-@given('El usuario se encuentra en el grid de comisiones ciudad')
+"""@given('El usuario se encuentra en el grid de comisiones ciudad')
 def step_impl(context):
 
       assert 10
-
-@given('la solicitud esta con estatus "Solicitud de comisión en registro" ciudad y selecionar la comisión para agregar ciudad')
-def step_impl(context):
-     context.ciudad_page = CiudadPage(context.driver)
+"""
+@given('La solicitud esta con estatus "{estatus}" ciudad y selecionar la comisión para agregar ciudad')
+def step_impl(context,estatus):
      context.all_page = AllPage(context.driver)
+     context.ciudad_page = CiudadPage(context.driver)
+     time.sleep(1)
      context.all_page.menu_comision()
+     time.sleep(3)
      context.all_page.buscar_comision(NUMERO_COMISIÓN)
-     context.all_page.seleccionar_comision(ESTATUS_COMISIÓN)
+     context.all_page.seleccionar_comision(estatus)
 
 @when('Seleccionar menu de ciudades')
 def step_impl(context):

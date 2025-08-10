@@ -5,8 +5,7 @@ from behave import *
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from config import USUARIOS,PATHS
-from features.pages.login_page import LoginPage
+from pages.login_page import LoginPage
 import time
 
 @given('Hemos abierto la página inicial del sistema login')
@@ -24,20 +23,19 @@ def step_impl(context):
         context.logged_in = True
         context.login_exitoso = True  # Marca como logueado
 
-@when('Capturas el usuario y contraseña')
-def step_impl(context):
+@when('Capturas el usuario "{usuario}" , contraseña "{password}"')
+def step_impl(context,usuario,password):
     time.sleep(2)
-    usuario = USUARIOS["OPERADOR_SIGEVI"]["usuario"]
-    password = USUARIOS["OPERADOR_SIGEVI"]["password"]
+    #Autorizador_SIGEVI
+    #OPERADOR_SIGEVI
     context.login_page.enter_credentials(usuario, password)
     
 @when('Seleccionar iniciar sesión')
 def step_impl(context):
    context.login_page.click_login_button()
 
-@when('Seleccionar el rol y dar clic en continuar')
-def step_impl(context):
-    rol = USUARIOS["OPERADOR_SIGEVI"]["rol"]
+@when('Seleccionar el rol "{rol}" y dar clic en continuar')
+def step_impl(context,rol):
     context.login_page.select_role(rol)
     context.login_page.click_confirm_button()
 

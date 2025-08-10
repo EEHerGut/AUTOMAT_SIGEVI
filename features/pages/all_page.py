@@ -115,6 +115,8 @@ class AllPage(BasePage):
             bool: True si el texto coincide, False si no
         """
         try:
+
+            time.sleep(2)
             # Esperar a que el botón esté presente y visible
             boton = WebDriverWait(self.driver, timeout).until(
                 EC.visibility_of_element_located(locator)

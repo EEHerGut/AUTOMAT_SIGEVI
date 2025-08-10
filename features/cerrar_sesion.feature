@@ -1,5 +1,5 @@
 		Feature: Login_cerrar
-
+	      @logout
 		  Scenario: Cerrar sesión
 			  Given Al terminar la prueba
               When Dar clic en el botón de cerrar sesión

@@ -28,14 +28,11 @@ class GastosPage(BasePage):
         return self
         
     def seleccionar_tipo_gasto(self, tipo_gasto):
-        dropdown = self.wait_for_element(self.TIPO_GASTO_DROPDOWN, self.LONG_WAIT)
-        Select(dropdown).select_by_visible_text(tipo_gasto)
+        self.select_by_visible_text(self.TIPO_GASTO_DROPDOWN,tipo_gasto)
         return self
     
     def agregar_monto(self, monto):
-        campo = self.wait_for_element(self.MONTO_FIELD, self.DEFAULT_WAIT)
-        campo.clear()
-        campo.send_keys(monto)
+        self.send_keys(self.MONTO_FIELD,monto)
         return self
     
     def guardar_gasto(self):

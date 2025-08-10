@@ -3,7 +3,7 @@ from behave import *
 from config import SOLICITUDES
 from pages.comision_page import ComisionPage
 from pages.all_page import AllPage
-
+"""
 @given('El usuario se encuentra en el grid de comisiones')
 def step_impl(context):
     if not hasattr(context, 'login_exitoso'):
@@ -16,16 +16,19 @@ def step_impl(context):
         ''')
         context.login_exitoso = True
     
-    context.comision_page = ComisionPage(context.driver)
+ """
   
     
-@when('Seleccionar el menu de comisiones y dar clic en el boton de Nueva Solicitud')
+@given('Seleccionar el menu de comisiones y dar clic en el boton de Nueva Solicitud')
 
 def step_impl(context):
-
+ 
+    context.comision_page = ComisionPage(context.driver)
     context.all_page = AllPage(context.driver)
+    context.all_page.refresh_page()
+    time.sleep(9)
     context.all_page.menu_comision()
-    time.sleep(3)
+    time.sleep(5)
     context.comision_page.click_nueva_solicitud()  
 
 @then('Deberíamos ver el formulario de solicitud de comisión')

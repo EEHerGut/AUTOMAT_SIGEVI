@@ -5,8 +5,9 @@ from .base_page import BasePage
 class EnvioPage(BasePage):
     # Locators for Vuelos section
     MENU_ENVIO = (By.XPATH, "//app-details-table-commission//a[contains(@class, '') and contains(text(), ' Envío a autorización ')]")
-    SUBMIT_BUTTON = (By.XPATH, "//*[@id='sendPay']//button[contains(@class, 'btn btn-primary') and contains(text(), 'Aceptar')]")
-    ACEPTAR_BUTTON = (By.XPATH, "//div[@id='sendPay']//button[contains(@class, 'btn-primary') and contains(text(), 'Aceptar')]")
+    SUBMIT_BUTTON = (By.XPATH, "//*[@id='sendPay']//button[2]")
+    ACEPTAR_BUTTON = (By.XPATH, "//*[@id='sendPay']//button[contains(text(), 'Aceptar')]")
+    GRID_TABLE = (By.XPATH, "//table[contains(@class, 'table')]")
 
     def __init__(self, driver):
        super().__init__(driver)
@@ -19,3 +20,8 @@ class EnvioPage(BasePage):
        self.wait_and_click(self.SUBMIT_BUTTON, self.DEFAULT_WAIT)
        self.wait_and_click(self.ACEPTAR_BUTTON, self.DEFAULT_WAIT)
        return self
+    
+    def validar_grid(self,record_data):
+            
+        self.validate_record_values(grid_locator=self.GRID_TABLE,record_data=record_data)
+        return self

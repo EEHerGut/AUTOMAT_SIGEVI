@@ -1,8 +1,10 @@
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
 from config import TIEMPOS_ESPERA
 from selenium.webdriver.support.ui import Select
 from behave import *
+
 
 class BasePage:
     def __init__(self, driver, timeout=10):
@@ -112,5 +114,72 @@ class BasePage:
         element.click()
         return self
     
+    def upload_file_with_verification(self, file_input_locator, file_path, verification_locator=None, timeout=None):
+        """Sube un archivo y verifica que se haya cargado correctamente
+    Args:
+        file_input_locator: Tupla (By, locator) para el input file
+        file_path: Ruta absoluta del archivo
+        verification_locator: (Opcional) Locator para verificar la carga
+        timeout: (Opcional) Tiempo máximo de espera
+    Returns:
+        bool: True si la carga fue exitosa
+        """
+        self.upload_file(file_input_locator, file_path)
+    
+        if verification_locator:
+            try:
+                wait = WebDriverWait(self.driver, timeout or self.timeout)
+                return wait.until(EC.visibility_of_element_located(verification_locator)).is_displayed()
+            except:
+                return False
+        return True
+    
+    def upload_file(self, file_input_locator, file_path):
+        """Sube un archivo a un input de tipo file
+    Args:
+        file_input_locator: Tupla (By, locator) para el input file
+        file_path: Ruta absoluta del archivo a subir
+        """
+        file_input = self.wait.until(EC.presence_of_element_located(file_input_locator))
+        file_input.send_keys(file_path)
+
+    def is_record_in_grid(self, column_name, expected_value, timeout=10):
+        """
+        Verifica si un registro existe en el grid buscando por columna y valor
+        Args:
+            column_name: Nombre de la columna donde buscar
+            expected_value: Valor esperado a encontrar
+            timeout: Tiempo máximo de espera
+        Returns:
+            bool: True si el registro existe, False si no
+        """
+        try:
+            cell_locator = (By.XPATH, f"//td[@data-column='{column_name}' and contains(., '{expected_value}')]")
+            return self.is_visible(cell_locator, timeout)
+        except:
+            return False
+
+    def get_grid_records_count(self, grid_locator):
+        """Obtiene el número total de registros visibles en el grid"""
+        return len(self.find_elements((By.XPATH, f"{grid_locator}//tbody/tr[not(contains(@style, 'none'))]")))
+
+    def validate_record_values(self, grid_locator, record_data, timeout=10):
+        """
+        Valida múltiples valores de un registro en el grid
+        Args:
+            record_data: Diccionario con {nombre_columna: valor_esperado}
+        Returns:
+            bool: True si todos los valores coinciden
+        """
+        try:
+            xpath_parts = []
+            for column, value in record_data.items():
+                xpath_parts.append(f"td[@data-column='{column}' and contains(., '{value}')]")
+            
+            full_xpath = f"{grid_locator}//tr[{' and '.join(xpath_parts)}]"
+            
+            return self.is_visible((By.XPATH, full_xpath), timeout)    
+        except:
+            return False 
             
    
