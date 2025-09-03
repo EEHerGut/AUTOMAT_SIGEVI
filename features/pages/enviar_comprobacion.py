@@ -3,7 +3,7 @@ from .base_page import BasePage
 
 class EnviarcomprobacionPage(BasePage):
         #element colector
-        MENU_CONSULTAR = (By.XPATH, "//a[contains(text(), 'Envío a comprobación')]")
+        MENU_COMPROBACIÓN = (By.XPATH, "//a[contains(text(), 'Envío a comprobación')]")
         BOTON_ACEPTAR = (By.XPATH, "//*[@id='sendPay']//button[contains(@class, 'btn btn-primary')]")
         BOTON_CONFIRMAR = (By.XPATH, "//*[@id='sendPay']//button[contains(@class, 'btn btn-primary')]")
         GRID_TABLE = (By.XPATH, "//table[contains(@class, 'table')]")
@@ -13,7 +13,7 @@ class EnviarcomprobacionPage(BasePage):
             super().__init__(driver)  
 
         def seleccionar_menu(self):
-            self.wait_and_click(self.MENU_CONSULTAR, self.DEFAULT_WAIT)
+            self.wait_and_click(self.MENU_COMPROBACIÓN, self.DEFAULT_WAIT)
             return self
         
         def confirmar_envio(self):

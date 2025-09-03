@@ -26,18 +26,18 @@ class CiudadPage(BasePage):
         return self
     
     def seleccionar_estado(self, estado):
-        time.sleep(3)
+
         dropdown = self.wait_for_element(self.ESTADO_DROPDOWN_ID, self.LONG_WAIT)
         Select(dropdown).select_by_visible_text(estado)
         return self
-   
-    
-    def seleccionar_municipio(self, municipio):
-        dropdown = self.wait_for_element(self.MUNICIPIO_DROPDOWN_ID, self.LONG_WAIT)
-        Select(dropdown).select_by_visible_text(municipio)
-        return self
+         
+    def guardar_ciudad(self,data):
         
-    def guardar_ciudad(self):
+        time.sleep(2)
+        dropdown = self.wait_for_element(self.ESTADO_DROPDOWN_ID, self.LONG_WAIT)
+        Select(dropdown).select_by_visible_text(data['state'])
+        dropdown = self.wait_for_element(self.MUNICIPIO_DROPDOWN_ID, self.LONG_WAIT)
+        Select(dropdown).select_by_visible_text(data['town'])
         self.wait_and_click(self.BOTON_GUARDAR_XPATH, self.DEFAULT_WAIT)
         return self
     

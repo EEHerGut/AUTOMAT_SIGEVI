@@ -1,11 +1,13 @@
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import Select
 from .base_page import BasePage
+
 import pyautogui
 import time
 
 class ComprobacionPage(BasePage):
        # Element locators
-       MENU_CONSULTAR = (By.XPATH, "//a[contains(text(), 'Consultar/')]")
+       MENU_CONSULTAR = (By.XPATH, "//a[contains(text(), 'Consultar')]")
        BOTON_ADDCOMPRO= (By.XPATH, "//button[contains(text(), 'Agregar comprobación')]")
        CHECKBOX_ANTICIPO = (By.XPATH, "//*[@id='check']")
        BOTON_CONTINUAR = (By.XPATH, "//*[@id='addFormModal']//button[contains(text(), 'Continuar')]")
@@ -27,6 +29,7 @@ class ComprobacionPage(BasePage):
 
        def __init__(self, driver):
             super().__init__(driver)
+           
 
        def clic_consultar(self):
             self.wait_and_click(self.MENU_CONSULTAR, self.DEFAULT_WAIT)
@@ -47,21 +50,25 @@ class ComprobacionPage(BasePage):
              self.wait_and_click(self.BOTON_SIGUIENTE, self.DEFAULT_WAIT)
              return self
        
-       def cargar_formulario_comprobación(self,concepto,importe,concepto_impuesto,monto):
-             
+       def cargar_formulario_comprobación(self,data):
+             ##concepto,importe,concepto_impuesto,monto
              time.sleep(2)
              pyautogui.click(x=768, y=350) 
+             time.sleep(1)
              pyautogui.press("left")
+             time.sleep(1)
              pyautogui.click(x=768, y=390) 
+             time.sleep(1)
              pyautogui.press("left")
-             
-             self.select_by_visible_text(self.CONCEPTO_GASTO,concepto)
-             self.send_keys(self.IMPORTE,importe)
+             []
+             dropdown = self.wait_for_element(self.CONCEPTO_GASTO, self.LONG_WAIT)
+             Select(dropdown).select_by_visible_text(data['concepto'])
+             self.send_keys(self.IMPORTE,data['monto'])
              self.wait_and_click(self.BOTON_AGREGAR, self.DEFAULT_WAIT)
              self.wait_and_click(self.CONFIRMAR, self.DEFAULT_WAIT)
              self.wait_and_click(self.BOTON_IMPUESTO, self.DEFAULT_WAIT)
-             self.select_by_value(self.DROP_IMPUESTO,concepto_impuesto)
-             self.send_keys(self.MONTO_IMPUESTO,monto)
+             self.select_by_value(self.DROP_IMPUESTO,data['concepto_impuesto'])
+             self.send_keys(self.MONTO_IMPUESTO,data['monto_impuesto'])
              self.wait_and_click(self.BOTON_AC_IMPUESTO, self.DEFAULT_WAIT)
              self.wait_and_click(self.BOTON_CONF_IMPUESTO, self.DEFAULT_WAIT)
 
@@ -69,7 +76,7 @@ class ComprobacionPage(BasePage):
        
        def validar_grid(self,record_data):
             
-            self.validate_record_values(grid_locator=self.GRID_COMPROBACIONES,record_data=record_data)
+            self.validate_record_values_norecord(grid_locator=self.GRID_COMPROBACIONES,record_data=record_data)
             return self
 
              

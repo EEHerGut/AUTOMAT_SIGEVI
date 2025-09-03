@@ -1,32 +1,33 @@
 import time
 from behave import *
 from pages.all_page import AllPage
-from features.pages.Autorizar_RechazarPage import Autorizar_RechazarPage
+from features.pages.reembolsar_page import ReembolsarPage
 from config import NUMERO_COMISIÓN
 
-@given('Seleccionar solicitud que cuenta con el estatus "{estatus}"')
+@given('Seleccionar solicitud que cuenta con el estatus "{estatus}" reembolso')
 def step_impl(context,estatus):
 
     context.all_page = AllPage(context.driver)
-    context.autorizar_page = Autorizar_RechazarPage(context.driver)
+    context.reembolsar = ReembolsarPage(context.driver)
     context.all_page.refresh_page()
     time.sleep(2)
     context.all_page.menu_comision()
     context.all_page.buscar_comision(NUMERO_COMISIÓN)
     context.all_page.seleccionar_comision(estatus)
   
-@when('Seleccionar menu de autorizar')
+@when('Seleccionar menu de reembolso')
 def step_impl(context):
   
-    context.autorizar_page.seleccionar_menu_autorizar()
+    context.reembolsar.seleccionar_menu_reembolsar()
 
-@when('Autorizar la solicitud y aceptar')
+@when('Rembolsar la comisión y aceptar')
 def step_impl(context):
 
-    context.autorizar_page.confirmar_autorizar()
+    context.reembolsar.confirmar_autorizar()
 
-@then('Validar el estatus de la comisión "{estatus}" autorizar solicitud')
+@then('Validar el estatus de la comisión "{estatus}" reembolsar comisión')
 def step_impl(context,estatus):
+    context.all_page.menu_comision()
     context.all_page.buscar_comision(NUMERO_COMISIÓN)
     time.sleep(1)
     record_data = {
@@ -35,10 +36,9 @@ def step_impl(context,estatus):
             'num': NUMERO_COMISIÓN
         }
 
-    assert context.autorizar_page.validar_grid(record_data), \
+    assert context.reembolsar.validar_grid(record_data), \
                 f"El registro estado con registro Solicitud de comisión pendiente de autorización no apareció en el grid"
  
     
-
-
+   
     

@@ -4,7 +4,7 @@ from pages.all_page import AllPage
 from features.pages.Autorizar_RechazarPage import Autorizar_RechazarPage
 from config import NUMERO_COMISIÓN
 
-@given('Seleccionar solicitud que cuenta con el estatus "{estatus}"')
+@given('Seleccionar solicitud que cuenta con el estatus "{estatus}" rechazar solicitud')
 def step_impl(context,estatus):
 
     context.all_page = AllPage(context.driver)
@@ -15,17 +15,19 @@ def step_impl(context,estatus):
     context.all_page.buscar_comision(NUMERO_COMISIÓN)
     context.all_page.seleccionar_comision(estatus)
   
-@when('Seleccionar menu de autorizar')
+@when('Seleccionar menu de rechazar')
 def step_impl(context):
   
-    context.autorizar_page.seleccionar_menu_autorizar()
+    context.autorizar_page.seleccionar_menu_rechazar()
 
-@when('Autorizar la solicitud y aceptar')
+@when('Rechazar la solicitud y aceptar')
 def step_impl(context):
 
-    context.autorizar_page.confirmar_autorizar()
+    context.autorizar_page.confirmar_rechazo()
+    context.all_page.menu_comision()
+ 
 
-@then('Validar el estatus de la comisión "{estatus}" autorizar solicitud')
+@then('Validar el estatus de la comisión "{estatus}" rechazar solicitud')
 def step_impl(context,estatus):
     context.all_page.buscar_comision(NUMERO_COMISIÓN)
     time.sleep(1)

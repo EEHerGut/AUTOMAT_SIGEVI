@@ -1,4 +1,4 @@
-Feature: Autorizar Solicitud
+Feature: Depositar dotación
     ##Rol:Operador 
     ##Quiero: Dar de alta una solicitud nacional/internacional sin anticipo 
     ##Para: Atender una comisión
@@ -8,14 +8,15 @@ Feature: Autorizar Solicitud
         Given Inicio sesión como "AUTORIZADOR_SIGEVI"
         Then El sistema nos permite visualizar el panel principal  
         
-    @autorizar_solicitud
-    Scenario: Autorizar solicitud
-        Given Seleccionar solicitud que cuenta con el estatus "Solicitud de comisión pendiente de autorización"
-        When Seleccionar menu de autorizar
-		And Autorizar la solicitud y aceptar
-        Then Validar el estatus de la comisión "Comisión pendiente de dotación" autorizar solicitud
-        #Comisión pendiente de dotación - comisión con dotación
+    @depositar
+    Scenario: Depositar
+        Given Seleccionar solicitud que cuenta con el estatus "Comisión con dotación autorizada" depositar
+        When Seleccionar menu de depositar
+		And Autorizar la dotación y aceptar
+        Then Validar el estatus de la comisión "Depósito en proceso" autorizar solicitud depositar
+        #Depósito en proceso - comisión con dotación
         #Solicitud de comisión autorizada - comisión sin dotación
+
 	Scenario: Cerrar sesión
 		Given Al terminar la prueba
         When Dar clic en el botón de cerrar sesión

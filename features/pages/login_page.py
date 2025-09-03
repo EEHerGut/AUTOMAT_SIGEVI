@@ -1,24 +1,27 @@
 
 from behave import *
-from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
-from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from config import URLS
+from .base_page import BasePage 
 
-class LoginPage:
-    def __init__(self, driver):
-        self.driver = driver
-        self.wait = WebDriverWait(driver, 10)
-        self.LOGGED_IN_INDICATOR = (By.XPATH, "//app-home//button[contains(@class, 'primary') and contains(text(), 'Continuar')]")
-        self.usuario_input = (By.ID, "usuario")
-        self.password_input = (By.ID, "password")
-        self.login_button = (By.XPATH, "//*[@id='container-fluid']/div/div[2]/form/div[5]/div/button")
-        self.role_dropdown = (By.ID, "roleUser")
-        self.confirm_button = (By.XPATH, "//*[@id='container-fluid']/div/div[2]/div[2]/form/div[2]/div/button")
-        self.breadcrumb = (By.XPATH, "//*[@id='body']/main/app-root/app-home/app-navbar/app-breadcrumb/div/ol/li[2]")
-
+class LoginPage(BasePage):
+        
+    LOGGED_IN_INDICATOR = (By.XPATH, "//app-home//button[contains(@class, 'primary') and contains(text(), 'Continuar')]")
+    usuario_input = (By.XPATH, "//input[@placeholder='Contraseña' or @placeholder='Ingresa tu usuario']")
+    password_input = (By.XPATH, "//input[@placeholder='Contraseña' or @placeholder='Ingresa tu contraseña']")
+    login_button = (By.XPATH, "//*[@id='container-fluid']/div/div[2]/form/div[5]/div/button")
+    role_dropdown = (By.ID, "roleUser")
+    confirm_button = (By.XPATH, "//*[@id='container-fluid']/div/div[2]/div[2]/form/div[2]/div/button")
+    breadcrumb = (By.XPATH, "//*[@id='body']/main/app-root/app-home/app-navbar/app-breadcrumb/div/ol/li[2]")
+    BOTON_CERRARSESION= (By.XPATH, "//li[contains(@class, 'nav-item')]//a[.//img[contains(@src, 'box-arrow-right')]]")
+    CONFIRMAR = (By.XPATH, "//button[normalize-space()='Cerrar Sesión']")     
+           
+    def __init__(self, driver,context):
+        super().__init__(driver)
+        self.context = context 
+    
     def is_user_logged_in(self):
         """Verifica si el usuario ya tiene sesión activa"""
         try:
@@ -34,36 +37,23 @@ class LoginPage:
         self.driver.get(URLS["BASE"])
         self.driver.execute_script("document.body.style.zoom='80%'")
 
-    def enter_credentials(self, usuario, password):
+    def enter_credentials(self, datos):
+        self.wait_for_element(self.usuario_input,self.LONG_WAIT)
         """Ingresa usuario y contraseña"""
-        self.driver.find_element(*self.usuario_input).send_keys(usuario)
-        self.driver.find_element(*self.password_input).send_keys(password)
+        self.driver.find_element(*self.usuario_input).send_keys(datos["usuario"])
+        self.driver.find_element(*self.password_input).send_keys(datos["password"])
+        self.wait_and_click(self.login_button, self.DEFAULT_WAIT)
+        
+        dropdown = self.wait_for_element(self.role_dropdown, self.LONG_WAIT)
+        Select(dropdown).select_by_visible_text(datos["rol"])
+        self.wait_and_click(self.confirm_button, self.DEFAULT_WAIT)
 
-    def click_login_button(self):
-        """Hace click en el botón de login"""
-        WebDriverWait(self.driver, 10).until(
-            EC.element_to_be_clickable(self.login_button)
-        ).click()
-
-    def select_role(self, rol):
-        """Selecciona el rol del dropdown"""
-        dropdown_element = WebDriverWait(self.driver, 15).until(
-            EC.presence_of_element_located(self.role_dropdown)
-        )
-        Select(dropdown_element).select_by_visible_text(rol)
-
-    def click_confirm_button(self):
-        """Confirma la selección de rol"""
-        WebDriverWait(self.driver, 10).until(
-            EC.element_to_be_clickable(self.confirm_button)
-        ).click()
-
-    def verify_successful_login(self):
-        """Verifica que el login fue exitoso"""
-        textos_esperados = ["Inicio"]
-        elemento = WebDriverWait(self.driver, 15).until(
-            EC.visibility_of_element_located(self.breadcrumb)
-        )
-        texto_actual = elemento.text.strip()
-        return any(texto in texto_actual for texto in textos_esperados)             
+##cerrar sesion
+    def cerrar_sesion(self):
+        
+        self.wait_and_click(self.BOTON_CERRARSESION, self.DEFAULT_WAIT)
+        self.wait_and_click(self.CONFIRMAR, self.DEFAULT_WAIT)
+        return self
+          
+  
 

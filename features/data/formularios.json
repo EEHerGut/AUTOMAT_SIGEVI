@@ -1,0 +1,59 @@
+{
+  "SOLICITUD_ANTICIPO": {
+    "anticipo": "Sí",
+    "data": "09/05/2025",
+    "data2": "09/06/2025"
+  },
+  "CIUDAD": {
+    "state": "Guanajuato",
+    "town": "Celaya"
+  },
+  "VUELO": {
+    "trip": "Viaje sencillo",
+    "day_off": "30/08/2025",
+    "origen": "MEX - MEXICO",
+    "arrive": "TLC - TOLUCA",
+    "aeroline": "AEROMEXICO"
+  },
+   "SIN_ANTICIPO": {
+        "anticipo": "No", 
+        "expediente": "55735",
+        "tipo_comision": "NACIONAL",
+        "transporte": "Avión",
+        "fecha_salida": "07/2025/20",
+        "fecha_regreso": "07/2025/21",
+        "expediente_autoriza": "48496",
+        "area_gasto": "220000",
+        "objetivo": "Comisión con anticipo nacional",
+        "ex_autoriza":"121398",
+        "num_oficio":"37"
+    },
+    "COMPROBACION":{
+       "concepto":"Hospedaje",
+        "monto":"1340.59",
+        "concepto_impuesto": "19",
+        "monto_impuesto":"129.41"
+    },
+    "IMPUESTO":{
+        "id_complemento": "1",
+        "concepto": "IVA por prestación de servicios",
+        "monto": "230.32"
+    },
+    "GASTO":{
+        "concept": "Gasolina",
+        "amount": "2342.13"
+    },
+
+    "ARCHIVOS":{
+        "tipo_archivo": "Reporte de otorgamiento",
+        "descripción": "Descripción de Reporte de otorgamiento",
+        "ruta":"C:/Users/Lenovo/Downloads/data.pdf"
+    },
+
+    "ARCHIVOS_":{
+        "tipo_archivo": "Recibo de la dotación",
+        "descripción": "Descripción de Recibo de la dotación",
+        "ruta":"C:/Users/Lenovo/Downloads/data.pdf"
+    }
+}
+

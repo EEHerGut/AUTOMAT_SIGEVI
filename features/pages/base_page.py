@@ -1,9 +1,14 @@
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+from selenium.common.exceptions import TimeoutException
 from config import TIEMPOS_ESPERA
 from selenium.webdriver.support.ui import Select
 from behave import *
+from utils.logger import global_logger as logger
+import os
+from datetime import datetime
+from selenium.webdriver.common.by import By
 
 
 class BasePage:
@@ -14,7 +19,31 @@ class BasePage:
         self.DEFAULT_WAIT = TIEMPOS_ESPERA['DEFAULT_WAIT']
         self.LONG_WAIT = TIEMPOS_ESPERA['LONG_WAIT']
         self.SHORT_WAIT = TIEMPOS_ESPERA['SHORT_WAIT']
+        self.PAGE_MARKER = None  # Sobreescribir en páginas hijas
+
     
+    def is_loaded(self):
+        """
+        Verifica si la página está completamente cargada.
+        DEBE ser sobrescrito por cada página hija.
+        """
+        if self.PAGE_MARKER is None:
+            raise NotImplementedError("Cada página debe definir PAGE_MARKER o sobrescribir is_loaded()")
+            
+        try:
+            return self.is_visible(self.PAGE_MARKER, timeout=self.SHORT_WAIT)
+        except TimeoutException:
+            return False
+        
+    def load(self):
+        """
+        Carga la página y verifica que esté lista.
+        """
+        if not self.is_loaded():
+            self._navigate()
+            self.wait.until(lambda _: self.is_loaded(),
+                          message=f"La página no se cargó correctamente. Markers: {self.PAGE_MARKER}")
+        
     
     def find_element(self, locator):
         """Encuentra un elemento esperando a que sea visible"""
@@ -52,7 +81,7 @@ class BasePage:
         """Toma un screenshot"""
         self.driver.save_screenshot(filename)
 
-    def select_by_visible_text(self, locator, text):
+    def seleccionar_tipo_vueloselect_by_visible_text(self, locator, text):
         """Selecciona una opción por texto visible en un dropdown"""
         Select(self.find_element(locator)).select_by_visible_text(text)
 
@@ -107,6 +136,18 @@ class BasePage:
         return WebDriverWait(self.driver, timeout).until(
             EC.visibility_of_element_located(locator))
     
+    def wait(self, locator, timeout):
+        """Espera a que un elemento sea clickeable"""
+        element = self.find_element(locator)
+        return element
+    
+    def es_elemento_visible(self,xpath):
+        try:
+            elemento = self.driver.find_element(By.XPATH, xpath)
+            return elemento.is_displayed()
+        except:
+            return False
+    
     def wait_and_click(self, locator, timeout):
         """Espera a que un elemento sea clickeable y hace click"""
         element = WebDriverWait(self.driver, timeout).until(
@@ -153,8 +194,12 @@ class BasePage:
         Returns:
             bool: True si el registro existe, False si no
         """
+        logger.info(f"🟢🟢🔴🔴🟢🟢🔴🔴 NOMBRE COLUMNA, VALOR ESPERADO: {column_name,expected_value}")
+        
         try:
             cell_locator = (By.XPATH, f"//td[@data-column='{column_name}' and contains(., '{expected_value}')]")
+            logger.info(f"🟢🟢🔴🔴🟢🟢🔴🔴 RESULTADO: {cell_locator}")
+
             return self.is_visible(cell_locator, timeout)
         except:
             return False
@@ -163,23 +208,141 @@ class BasePage:
         """Obtiene el número total de registros visibles en el grid"""
         return len(self.find_elements((By.XPATH, f"{grid_locator}//tbody/tr[not(contains(@style, 'none'))]")))
 
+    def guardar_registro_comision(self,numero_comision, estado, archivo_nombre):
+        try:
+            directorio = "resultados_1"
+            
+            # CORRECCIÓN: Crear directorio solo si NO existe
+            if not os.path.exists(directorio):
+                os.makedirs(directorio)
+                print(f"📂 Carpeta creada: {os.path.abspath(directorio)}")
+            
+            # Verificar permisos (opcional)
+            permisos = os.stat(directorio).st_mode
+            print(f"🔓 Permisos de la carpeta: {oct(permisos)}")
+            
+            ruta_archivo = os.path.join(directorio, archivo_nombre)
+            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            
+            lineas = []
+            encontrado = False
+            
+            # Leer archivo si existe
+            if os.path.exists(ruta_archivo):
+                print(f"📄 Archivo existente encontrado: {ruta_archivo}")
+                with open(ruta_archivo, 'r', encoding='utf-8') as file:
+                    lineas = file.readlines()
+                
+                # Buscar y actualizar línea
+                for i, linea in enumerate(lineas):
+                    if linea.strip() and not linea.startswith('Timestamp'):
+                        partes = linea.strip().split(',')
+                        if len(partes) >= 2 and partes[1] == str(numero_comision):
+                                lineas[i] = f"{timestamp},{numero_comision},{estado}\n"
+                                encontrado = True
+                                print(f"🔄 Registro actualizado: {numero_comision}")
+                                break
+            
+            # Si no se encontró, agregar nueva línea
+            if not encontrado:
+                print(f"🆕 Nuevo registro: {numero_comision}")
+                if not lineas or not lineas[0].startswith('Timestamp'):
+                    lineas.insert(0, "Timestamp,Número_Comisión,Estado,Anticipo\n")
+                lineas.append(f"{timestamp},{numero_comision},{estado}\n")
+            
+            # Escribir todo de vuelta al archivo
+            with open(ruta_archivo, 'w', encoding='utf-8') as file:
+                file.writelines(lineas)
+            
+            print(f"✅ Registro {'actualizado' if encontrado else 'creado'}: {numero_comision} - {estado}")
+            print(f"📁 Archivo: {ruta_archivo}")
+            print(f"📍 Ruta absoluta: {os.path.abspath(ruta_archivo)}")
+            
+            # Verificar que realmente se creó
+            if os.path.exists(ruta_archivo):
+                print("🎯 ¡Archivo creado exitosamente!")
+            else:
+                print("❌ ¡Error: El archivo no se creó!")
+                
+        except Exception as e:
+            print(f"💥 Error crítico: {str(e)}")
+            import traceback
+            traceback.print_exc()
+        
     def validate_record_values(self, grid_locator, record_data, timeout=10):
         """
         Valida múltiples valores de un registro en el grid
         Args:
             record_data: Diccionario con {nombre_columna: valor_esperado}
-        Returns:
+        Returns:set_checkbox
             bool: True si todos los valores coinciden
         """
+        
+       
+        logger.info(f"🚀🚀🚀🚀🚀🚀🚀🚀 Recorddata: {record_data}")
         try:
             xpath_parts = []
             for column, value in record_data.items():
                 xpath_parts.append(f"td[@data-column='{column}' and contains(., '{value}')]")
             
             full_xpath = f"{grid_locator}//tr[{' and '.join(xpath_parts)}]"
+            resultado = self.is_visible((By.XPATH, full_xpath), timeout)
             
-            return self.is_visible((By.XPATH, full_xpath), timeout)    
-        except:
+            numero_comision = record_data.get('num', 'N/A')
+            estado = record_data.get('registro', 'N/A')
+            resultado="registro_comisiones.txt"
+            self.guardar_registro_comision(numero_comision, estado,resultado)
+            
+            return resultado       
+        except Exception  as e:
+            numero_comision = record_data.get('num', 'N/A')
+            estado = 'error'
+            resultado="registro_comisiones.txt"
+            self.guardar_registro_comision(numero_comision, estado, False)
             return False 
+        
+    def validate_record_values_norecord(self, grid_locator, record_data, timeout=10):
+        """
+        Valida múltiples valores de un registro en el grid
+        Args:
+            record_data: Diccionario con {nombre_columna: valor_esperado}
+        Returns:set_checkbox
+            bool: True si todos los valores coinciden
+        """
+        xpath_parts = []
+        for column, value in record_data.items():
+            xpath_parts.append(f"td[@data-column='{column}' and contains(., '{value}')]")
             
-   
+            full_xpath = f"{grid_locator}//tr[{' and '.join(xpath_parts)}]"
+            resultado = self.is_visible((By.XPATH, full_xpath), timeout)
+
+            return resultado      
+        
+    def get_input_value(self, locator, timeout=None):
+        """
+        Obtiene el valor de un input field mediante su locator
+        
+        Args:
+            locator: Tupla (By, locator) del elemento
+            timeout: Tiempo opcional de espera (usa el default si es None)
+        
+        Returns:
+            str: Valor del input o cadena vacía si no se encuentra
+        """
+        try:
+            wait = self.wait if timeout is None else WebDriverWait(self.driver, timeout)
+            element = wait.until(
+                EC.visibility_of_element_located(locator)
+            )
+            return element.get_attribute('value') or ''
+        
+        except TimeoutException:
+            logger.warning(f"⏰ Timeout al buscar elemento: {locator}")
+            return ''
+        except Exception as e:
+            logger.error(f"❌ Error al obtener valor del input {locator}: {str(e)}")
+            return ''
+                
+    
+        
+

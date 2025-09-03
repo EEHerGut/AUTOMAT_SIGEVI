@@ -1,0 +1,14 @@
+{
+  "OPERADOR_SIGEVI": {
+    "usuario": "mainc044",
+    "password": "B@40bR4$1607202$",
+    "rol": "Operador SIGEVI",
+    "dashboard_url": "/operador/dashboard"
+  },
+  "AUTORIZADOR_SIGEVI": {
+    "usuario": "mainc044",
+    "password": "B@40bR4$1607202$",
+    "rol": "Autorizador SIGEVI",
+    "dashboard_url": "/autorizador/dashboard"
+  }
+}

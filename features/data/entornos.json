@@ -1,0 +1,18 @@
+{
+  "develop": {
+    "BASE_URL": "https://frontend-sigevi-develop.banobras.gob.mx",
+    "URLS": {
+      "LOGIN": "/auth/login",
+      "COMISIONES": "/comision/comisiones"
+    },
+    "timeout": 15
+  },
+  "qa": {
+    "BASE_URL": "https://frontend-sigevi-qa.banobras.gob.mx",
+    "URLS": {
+      "LOGIN": "/auth/login",
+      "COMISIONES": "/comision/comisiones"
+    },
+    "timeout": 10
+  }
+}

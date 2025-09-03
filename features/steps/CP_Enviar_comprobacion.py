@@ -1,6 +1,6 @@
 from behave import *
 from pages.enviar_comprobacion import EnviarcomprobacionPage
-from config import COMPROBACION,NUMERO_COMISIÓN
+from config import NUMERO_COMISIÓN
 from pages.all_page import AllPage
 import time
 
@@ -31,15 +31,10 @@ def step_impl(context,estatus):
     record_data = {
             'column': 'Estado ',
             'registro': estatus,
+            'num': NUMERO_COMISIÓN
         }
 
     assert context.enviar.validar_grid(record_data), \
                 f"El registro estado con registro Solicitud de comisión pendiente de autorización no apareció en el grid"
  
-    
-    context.execute_steps('''
-            Given Al terminar la prueba
-            When Dar clic en el botón de cerrar sesión
-            Then Seleccionar el boton de cerrar sesión y esperar a que el sistema nos muestrela pantalla inicial
-        ''')
-    
+  

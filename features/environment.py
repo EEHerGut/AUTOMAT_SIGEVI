@@ -14,6 +14,10 @@ from selenium.webdriver.chrome.options import Options
 from logging.handlers import RotatingFileHandler
 from datetime import datetime
 from allure_commons.types import AttachmentType
+from utils.data_loader import load_json
+from features import config
+#from . import config
+import importlib
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
 
@@ -26,7 +30,7 @@ def before_all(context):
     context.logger = logging.getLogger('automatizacion')
     context.logger.setLevel(logging.DEBUG)
     formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
-    
+    importlib.reload(config)
     # Handler para archivo (rotativo)
     log_dir = "logs"
     os.makedirs(log_dir, exist_ok=True)
@@ -36,8 +40,9 @@ def before_all(context):
         backupCount=3,
         encoding='utf-8' 
     )
+
+
     file_handler.setFormatter(formatter)
-    
     # Handler para consola
     console_handler = logging.StreamHandler()
     console_handler.setFormatter(formatter)
@@ -57,13 +62,24 @@ def before_all(context):
     )
     
     context.logger.info("[TEST] 🛠️ Navegador Chrome configurado + [NETWORK] logs de red activados")
+  
 
 def before_scenario(context, scenario):
     context.scenario_start_time = datetime.now()  # Registra inicio del escenario
+    context.data = {
+        "roles": load_json("roles.json"),
+        "formularios": load_json("formularios.json"),
+        "entornos": load_json("entornos.json")
+    }
+
     context.logger.info(f"[TEST] 📌 Iniciando escenario: {scenario.name}")
+ 
+
     # Verifica si el usuario ya está logueado
     if hasattr(context, 'login_exitoso') and context.login_exitoso:
         context.logger.warning("[TEST] ⚠️ Sesión activa detectada - Omitiendo login")
+        url_principal = context.data["entornos"]["develop"]["BASE_URL"]
+        context.driver.get(url_principal)
     else:
        context.logger.debug("Nueva sesion requerida")
 
@@ -142,6 +158,11 @@ def after_scenario(context, scenario):
         summary = "\n".join([f"{url}: {latency}ms" for url, latency in network_entries])
         allure.attach(summary, name="network_performance", attachment_type=allure.attachment_type.TEXT)
 """
+
+def before_feature(context, feature):
+    context.test_data = load_json("formularios.json")
+    
+
 def after_all(context):
     # Cierra el navegador SOLO al final de todos los escenarios
     if hasattr(context, 'driver'):
