@@ -1,13 +1,10 @@
 from selenium.webdriver.common.by import By
 from .base_page import BasePage
 from selenium.webdriver.support.ui import Select
-import time
-import pyautogui
 
 
 class ArchivosPage(BasePage):
     # Locators for Vuelos section
-    MENU_ARCHIVOS = (By.XPATH, "//a[contains(text(), 'Aprobar') or contains(text(), 'Archivos')]")
     AGREGAR_ARCHIVO_BUTTON = (By.XPATH, "//button[contains(text(), 'Agregar') or contains(text(), 'Ag') or contains(text(), 'Add')]")
     ARCHIVO_DROPDOWN = (By.XPATH, "//select[@formControlName='typeFile']")
     AREA = (By.XPATH, "//textarea[@formControlName='description']")
@@ -21,8 +18,8 @@ class ArchivosPage(BasePage):
      super().__init__(driver)
         
     def seleccionar_menu_archivos(self):
-        
-        self.wait_and_click(self.MENU_ARCHIVOS, self.DEFAULT_WAIT)
+        MENU_ARCHIVOS = self.get_locator_botton('Archivos')
+        self.wait_and_click(MENU_ARCHIVOS, self.DEFAULT_WAIT)
         return self
         
     def click_agregar_archivo(self,data):

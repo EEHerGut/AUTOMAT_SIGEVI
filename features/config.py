@@ -34,7 +34,7 @@ ARCHIVOS = {
 #Comisión pendiente de comprobación
 #Solicitud de comisión pendiente de autorización
 
-NUMERO_COMISIÓN = '00965'
+NUMERO_COMISIÓN = '00999'
 ESTATUS_COMISIÓN = 'Solicitud de comisión en registro'
 
 

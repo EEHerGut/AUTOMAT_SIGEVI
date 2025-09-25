@@ -31,10 +31,17 @@ def step_impl(context,estatus):
 
     context.all_page.buscar_comision(NUMERO_COMISIÓN)
     time.sleep(0.5)
+    mundo=context.all_page.validar_comisión()
+    if mundo:
+     Var="INTERNACIONAL"
+    else:    
+     Var="NACIONAL"
+
     record_data = {
             'column': 'Estado ',
             'registro': estatus,
-            'num': NUMERO_COMISIÓN
+            'num': NUMERO_COMISIÓN,
+            'nac/inter': Var
         }
 
     assert context.envio_page.validar_grid(record_data), \

@@ -14,13 +14,14 @@ class DepositarPage(BasePage):
         super().__init__(driver)
     
     def seleccionar_menu_depositar(self):
-        self.wait_and_click(self.MENU_DEPOSITAR, self.DEFAULT_WAIT)
+        self.wait_and_click(self.get_locator_botton('Depositar'), self.DEFAULT_WAIT)
         return self
     
     def click_confirmar_depósito(self):
 
         self.wait_and_click(self.SOLICITAR_DEPTO, self.DEFAULT_WAIT)
         self.wait_and_click(self.BOTON_CONFIRMAR, self.DEFAULT_WAIT)
+        self.zoom_page()
         return self
             
     def validar_grid(self,record_data):

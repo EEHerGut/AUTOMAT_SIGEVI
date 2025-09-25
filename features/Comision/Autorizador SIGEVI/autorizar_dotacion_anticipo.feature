@@ -1,11 +1,8 @@
 Feature: Autorizar Dotación
-    ##Rol:Operador 
-    ##Quiero: Autorizar una dotación
-    ##Para: Atender una comisión
-    
+
     Scenario: Login  
         Given Inicio sesión como "AUTORIZADOR_SIGEVI"
-        Then El sistema nos permite visualizar el panel principal  
+        Then El sistema nos permite visualizar el panel principal
     
     #Comisión pendiente de dotación - con anticipo
     

@@ -1,7 +1,4 @@
 Feature: Autorizar Dotación
-    ##Rol:Operador 
-    ##Quiero: Autorizar una dotación
-    ##Para: Atender una comisión
     
     Background: Login  
         Given Inicio sesión como "AUTORIZADOR_SIGEVI"

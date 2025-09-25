@@ -2,7 +2,6 @@ from behave import *
 from pages.comision_page import ComisionPage
 from pages.all_page import AllPage
 from config import NUMERO_COMISIÓN
-from utils.logger import global_logger as logger
 import time
 
 @given('Seleccionar el menu de comisiones y dar clic en el boton de Nueva Solicitud')
@@ -32,14 +31,17 @@ def step_impl(context):
 @then('La solicitud se crea exitosamente')
 def step_impl(context):
     context.all_page.buscar_comision(NUMERO_COMISIÓN)
-    data = context.data["formularios"]['SIN_ANTICIPO']['anticipo']
-    anticipo=context.all_page.anticipo(data)
     time.sleep(1)
+    tipo_comision=context.all_page.validar_tipo_comisión()
+    tipo_anticipo=context.all_page.validar_anticipo()
     record_data = {
             'column': 'Estado ',
             'registro': 'Solicitud de comisión en registro',
-            'num': NUMERO_COMISIÓN
+            'num': NUMERO_COMISIÓN,
+            'nac/inter': tipo_comision,
+            'anticipo': tipo_anticipo
         }
+
 
     assert context.comision_page.validar_grid(record_data), \
                 f"El registro estado con registro Solicitud de comisión pendiente de autorización no apareció en el grid"

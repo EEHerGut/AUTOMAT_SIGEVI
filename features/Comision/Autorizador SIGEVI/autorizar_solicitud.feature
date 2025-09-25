@@ -1,8 +1,5 @@
 Feature: Autorizar Solicitud
-    ##Rol:Operador 
-    ##Quiero: Dar de alta una solicitud nacional/internacional sin anticipo 
-    ##Para: Atender una comisión
-    ##Hola
+
     @login_autorizador
     Scenario: Login  
         Given Inicio sesión como "AUTORIZADOR_SIGEVI"

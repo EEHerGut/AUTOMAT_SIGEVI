@@ -14,7 +14,7 @@ class AutorizarComprobacionPage(BasePage):
         super().__init__(driver)
         
     def seleccionar_menu_autorizar(self):
-        self.wait_and_click(self.MENU_APROBAR, self.DEFAULT_WAIT)
+        self.wait_and_click(self.get_locator_botton('Aprobar'), self.DEFAULT_WAIT)
         return self
         
     def confirmar_autorizar(self):

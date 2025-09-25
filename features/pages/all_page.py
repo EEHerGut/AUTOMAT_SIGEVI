@@ -7,6 +7,7 @@ from selenium.common.exceptions import (NoSuchElementException,
                                       TimeoutException)
 from utils.logger import global_logger as logger
 import logging
+import time
 
 
 
@@ -23,10 +24,13 @@ class AllPage(BasePage):
         self.BOTON_COMISION= (By.XPATH, "//a[contains(text(), 'Comisión')]")
         self.BOTON_COMISIONES= (By.XPATH, "//a[contains(text(), 'Comisiones')]")
         self.ETIQUETA_COMISION= (By.XPATH, "//h1[contains(text(), 'Comisiones')]")
+        self.MUNDO =(By.XPATH,"//table//tr[1]/td[3]//img")
+        self.ANTICIPO =(By.XPATH,"//table[contains(@class, 'table')]//tr/td[5]//img")
+        self.BOTON_AVION=(By.XPATH,"//table//tr[1]//td[position()=6]//i")
 
 
   def menu_comision(self):
-
+    self.zoom_page()
     if self.es_elemento_visible("//h1[contains(text(), 'Comisiones')]"):
           logger.info(f"✅✅✅✅✅Elemento: es visible")
     else:
@@ -60,6 +64,7 @@ class AllPage(BasePage):
         try:
             self.wait_for_element(self.SEARCH_FIELD, self.LONG_WAIT)
             self.send_keys(self.SEARCH_FIELD,numero_comision)
+            time.sleep(0.5)
             logging.info(f"Búsqueda realizada para comisión: {numero_comision}")
             return True
         except Exception as e:
@@ -70,6 +75,10 @@ class AllPage(BasePage):
   def seleccionar_comision(self, estado_esperado):
         self.wait_for_element(self.BOTON_ESTADO(estado_esperado),self.LONG_WAIT)
         self.wait_and_click(self.BOTON_ESTADO(estado_esperado), self.DEFAULT_WAIT)
+
+  def seleccionar_boleto(self):
+        self.wait_and_click(self.BOTON_AVION)
+
 
   def validar_registro_tabla(self, datos_esperados, locator_tabla, timeout=15):
         """
@@ -118,15 +127,26 @@ class AllPage(BasePage):
   def refresh_page(self):
         self.driver.refresh()
         self.driver.execute_script("document.body.style.zoom='80%'")
+   
+  def validar_tipo_comisión(self):
+        try:
+            self.wait_and_click(self.MUNDO, 2)
+            variable ="INTERNACIONAL"
+            return variable
+        except TimeoutException  :
+            variable="MACIONAL"
+            return variable
 
-  def anticipo(self,data):
-        logger.info(f"🚀🚀🚀🚀  🚀🚀🚀🚀  🚀🚀🚀🚀 ANTICIPO: {data}")
-        if data=='Sí':
-                data='Con Anticipo'
-        else:
-                data='Sin anticipo'
-        
-        logger.info(f"🚀🚀🚀🚀  🚀🚀🚀🚀  🚀🚀🚀🚀 ANTICIPO TEST: {data}")
-        return data
+  def validar_anticipo(self):
+         try:
+            self.wait_and_click(self.ANTICIPO, 2)
+            variable ="CON ANTICIPO"
+            return variable
+         except TimeoutException  :
+            variable="SIN ANTICIPO"
+            return variable
+         
+
+
 
     

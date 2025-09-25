@@ -1,5 +1,6 @@
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from utils.logger import global_logger as logger
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import TimeoutException
 from config import TIEMPOS_ESPERA
@@ -208,7 +209,7 @@ class BasePage:
         """Obtiene el número total de registros visibles en el grid"""
         return len(self.find_elements((By.XPATH, f"{grid_locator}//tbody/tr[not(contains(@style, 'none'))]")))
 
-    def guardar_registro_comision(self,numero_comision, estado, archivo_nombre):
+    def guardar_registro_comision(self,numero_comision, estado,nac_inter,anticipo,archivo_nombre):
         try:
             directorio = "resultados_1"
             
@@ -238,7 +239,7 @@ class BasePage:
                     if linea.strip() and not linea.startswith('Timestamp'):
                         partes = linea.strip().split(',')
                         if len(partes) >= 2 and partes[1] == str(numero_comision):
-                                lineas[i] = f"{timestamp},{numero_comision},{estado}\n"
+                                lineas[i] = f"{timestamp},{numero_comision},{estado},{nac_inter},{anticipo}\n"
                                 encontrado = True
                                 print(f"🔄 Registro actualizado: {numero_comision}")
                                 break
@@ -248,7 +249,7 @@ class BasePage:
                 print(f"🆕 Nuevo registro: {numero_comision}")
                 if not lineas or not lineas[0].startswith('Timestamp'):
                     lineas.insert(0, "Timestamp,Número_Comisión,Estado,Anticipo\n")
-                lineas.append(f"{timestamp},{numero_comision},{estado}\n")
+                lineas.append(f"{timestamp},{numero_comision},{estado},{nac_inter},{anticipo}\n")
             
             # Escribir todo de vuelta al archivo
             with open(ruta_archivo, 'w', encoding='utf-8') as file:
@@ -290,8 +291,10 @@ class BasePage:
             
             numero_comision = record_data.get('num', 'N/A')
             estado = record_data.get('registro', 'N/A')
+            nac_inter=record_data.get('nac/inter', 'N/A')
+            anticipo=record_data.get('anticipo', 'N/A')
             resultado="registro_comisiones.txt"
-            self.guardar_registro_comision(numero_comision, estado,resultado)
+            self.guardar_registro_comision(numero_comision, estado,nac_inter,anticipo,resultado)
             
             return resultado       
         except Exception  as e:
@@ -342,7 +345,34 @@ class BasePage:
         except Exception as e:
             logger.error(f"❌ Error al obtener valor del input {locator}: {str(e)}")
             return ''
-                
+
+    def get_locator_botton(self,accion):
+         return (By.XPATH, f"//app-details-table-commission//a[contains(@class, '') and contains(text(), '{accion}')]")
+
+    def zoom_page(self):
+        self.driver.execute_script("document.body.style.zoom='80%'")
+
+    def is_element_visible_data(self, locator):
+        """
+        Verifica si un elemento es visible en la página
+        :param locator: Tupla (By, selector) o string (CSS selector)
+        :param timeout: Tiempo máximo de espera (opcional)
+        :return: Boolean - True si es visible, False si no
+        """
+        
+        try:
+            # Si el locator es string, asumimos que es CSS selector
+            if isinstance(locator, str):
+                locator = (By.XPATH, locator)
+            
+            element = WebDriverWait(self.driver, self.DEFAULT_WAIT).until(
+                EC.visibility_of_element_located(locator)
+            )
+            return True
+        except TimeoutException:
+            return False
+        except Exception:
+            return False
     
         
 

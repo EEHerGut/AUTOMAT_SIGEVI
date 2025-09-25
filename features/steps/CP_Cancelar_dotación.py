@@ -1,33 +1,33 @@
 import time
 from behave import *
 from pages.all_page import AllPage
-from features.pages.Aut_Rec_Can_page import Autorizar_Rechazar_CancelarPage
+from features.pages.revertir_cancelar_dotacion import Revertir_CancelarDotacionPage
 from config import NUMERO_COMISIÓN
 
-@given('Seleccionar solicitud que cuenta con el estatus "{estatus}" rechazar solicitud')
+@given('Seleccionar solicitud que cuenta con el estatus "{estatus}" cancelar dotación')
 def step_impl(context,estatus):
 
     context.all_page = AllPage(context.driver)
-    context.autorizar_page = Autorizar_Rechazar_CancelarPage(context.driver)
+    context.cancelar_page = Revertir_CancelarDotacionPage(context.driver)
     context.all_page.refresh_page()
     time.sleep(2)
     context.all_page.menu_comision()
     context.all_page.buscar_comision(NUMERO_COMISIÓN)
     context.all_page.seleccionar_comision(estatus)
   
-@when('Seleccionar menu de rechazar')
+@when('Seleccionar menu de cancelar dotación')
 def step_impl(context):
   
-    context.autorizar_page.seleccionar_menu_rechazar()
+    context.cancelar_page.seleccionar_menu_cancelar()
 
-@when('Rechazar la solicitud y aceptar')
+@when('Cancelar la dotación y aceptar')
 def step_impl(context):
 
-    context.autorizar_page.confirmar_rechazo()
+    context.cancelar_page.confirmar_cancelación()
     context.all_page.menu_comision()
  
 
-@then('Validar el estatus de la comisión "{estatus}" rechazar solicitud')
+@then('Validar el estatus de la comisión "{estatus}" cancelar dotación')
 def step_impl(context,estatus):
     context.all_page.buscar_comision(NUMERO_COMISIÓN)
     time.sleep(1)
@@ -37,7 +37,7 @@ def step_impl(context,estatus):
             'num': NUMERO_COMISIÓN
         }
 
-    assert context.autorizar_page.validar_grid(record_data), \
+    assert context.cancelar_page.validar_grid(record_data), \
                 f"El registro estado con registro Solicitud de comisión pendiente de autorización no apareció en el grid"
  
     

@@ -25,14 +25,11 @@ class ComprobacionPage(BasePage):
        BOTON_CONF_IMPUESTO = (By.XPATH, "//app-verification-table//button[contains(text(), 'Aceptar')]") 
        GRID_COMPROBACIONES = (By.XPATH, "//table[contains(@class, 'table-striped') and contains(@class, 'clsTable')]")
 
-
-
        def __init__(self, driver):
             super().__init__(driver)
            
-
        def clic_consultar(self):
-            self.wait_and_click(self.MENU_CONSULTAR, self.DEFAULT_WAIT)
+            self.wait_and_click(self.get_locator_botton('Consultar'), self.DEFAULT_WAIT)
             return self
        
        def clic_comprobar(self):
@@ -59,8 +56,8 @@ class ComprobacionPage(BasePage):
              time.sleep(1)
              pyautogui.click(x=768, y=390) 
              time.sleep(1)
-             pyautogui.press("left")
-             []
+             pyautogui.press("right")
+        
              dropdown = self.wait_for_element(self.CONCEPTO_GASTO, self.LONG_WAIT)
              Select(dropdown).select_by_visible_text(data['concepto'])
              self.send_keys(self.IMPORTE,data['monto'])

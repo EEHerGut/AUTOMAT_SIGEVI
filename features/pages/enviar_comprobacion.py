@@ -13,7 +13,7 @@ class EnviarcomprobacionPage(BasePage):
             super().__init__(driver)  
 
         def seleccionar_menu(self):
-            self.wait_and_click(self.MENU_COMPROBACIÓN, self.DEFAULT_WAIT)
+            self.wait_and_click(self.get_locator_botton('Envío a comprobación'), self.DEFAULT_WAIT)
             return self
         
         def confirmar_envio(self):

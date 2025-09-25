@@ -1,14 +1,14 @@
 import time
 from behave import *
 from pages.all_page import AllPage
-from features.pages.Autorizar_RechazarPage import Autorizar_RechazarPage
+from features.pages.Aut_Rec_Can_page import Autorizar_Rechazar_CancelarPage
 from config import NUMERO_COMISIÓN
 
 @given('Seleccionar solicitud que cuenta con el estatus "{estatus}"')
 def step_impl(context,estatus):
 
     context.all_page = AllPage(context.driver)
-    context.autorizar_page = Autorizar_RechazarPage(context.driver)
+    context.autorizar_page = Autorizar_Rechazar_CancelarPage(context.driver)
     context.all_page.refresh_page()
     time.sleep(2)
     context.all_page.menu_comision()

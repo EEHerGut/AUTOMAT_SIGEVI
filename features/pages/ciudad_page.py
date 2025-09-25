@@ -1,13 +1,15 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 from .base_page import BasePage
+from selenium.common.exceptions import TimeoutException
 import time
 
 class CiudadPage(BasePage):
    
     # Locators
     MENU_CIUDADES_XPATH = (By.XPATH, "//a[contains(@class, 'dropdown-item goUrl') and contains(text(), ' Ciudades ')]")
-    BOTON_AGREGAR_CIUDAD_XPATH = (By.XPATH, "//app-add-city//button[normalize-space()='Agregar municipio']")
+    BOTON_AGREGAR_MUNICIPIO_XPATH = (By.XPATH, "//app-add-city//button[normalize-space()='Agregar municipio']")
+    BOTON_AGREGAR_CIUDAD_XPATH = (By.XPATH, "//button[contains(text(), ' Agregar ciudad ')]")
     ESTADO_DROPDOWN_ID = (By.ID, "state")
     MUNICIPIO_DROPDOWN_ID = (By.ID, "town")
     BOTON_GUARDAR_XPATH = (By.XPATH, "//*[@id='addFormModal']/div/div/div/div[3]/form/button")
@@ -18,24 +20,25 @@ class CiudadPage(BasePage):
         super().__init__(driver)
     
     def seleccionar_menu_ciudades(self):
-        self.wait_and_click(self.MENU_CIUDADES_XPATH, self.DEFAULT_WAIT)
+              
+        self.wait_and_click(self.get_locator_botton('Ciudades'), self.DEFAULT_WAIT)
         return self
     
     def click_agregar_ciudad(self):
-        self.wait_and_click(self.BOTON_AGREGAR_CIUDAD_XPATH, self.DEFAULT_WAIT)
-        return self
-    
-    def seleccionar_estado(self, estado):
 
-        dropdown = self.wait_for_element(self.ESTADO_DROPDOWN_ID, self.LONG_WAIT)
-        Select(dropdown).select_by_visible_text(estado)
-        return self
+         try:
+            self.wait_and_click(self.BOTON_AGREGAR_MUNICIPIO_XPATH, 2)
+            return self
+         except TimeoutException  :
+            self.wait_and_click(self.BOTON_AGREGAR_CIUDAD_XPATH, self.DEFAULT_WAIT)
+            return self
          
     def guardar_ciudad(self,data):
         
         time.sleep(2)
         dropdown = self.wait_for_element(self.ESTADO_DROPDOWN_ID, self.LONG_WAIT)
         Select(dropdown).select_by_visible_text(data['state'])
+        time.sleep(2)
         dropdown = self.wait_for_element(self.MUNICIPIO_DROPDOWN_ID, self.LONG_WAIT)
         Select(dropdown).select_by_visible_text(data['town'])
         self.wait_and_click(self.BOTON_GUARDAR_XPATH, self.DEFAULT_WAIT)

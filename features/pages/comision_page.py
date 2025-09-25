@@ -1,8 +1,8 @@
 from selenium.webdriver.common.by import By
 from .base_page import BasePage
 from selenium.webdriver.support.ui import Select
+from selenium.common.exceptions import NoSuchElementException
 from utils.logger import global_logger as logger
-
 import time
 
 
@@ -28,14 +28,14 @@ class ComisionPage(BasePage):
     NUMERO_OFICIO = (By.XPATH,"//input[@formcontrolname='officeNumber']")
     EXPEDIENTE_AUTORIZA=(By.XPATH,"//input[@formcontrolname='authorizerExp']")
     PDF_INPUT =(By.XPATH,"//input[@formcontrolname='officeFile']")
-
+    TIPO_MONEDA =(By.XPATH,"//app-new-commission//li[6]/select")
     # Element locators - editar solicitud
     MENU_SOLICITUD =  (By.XPATH, "//a[contains(text(), 'Solicitud')]")
     BOTON_ACTU_ACTUALIZAR = (By.XPATH, "//button[contains(text(), 'Actualizar') or @aria-label='Hola']")
     BOTON_ACTU_ACEPTAR = (By.XPATH, "//app-edit-commission//button[contains(text(), 'Confirmar') or contains(text(), 'Aceptar')]")
     BOTON_ACTU_CERRAR = (By.XPATH, "//button[normalize-space(text())='Cerrar']") 
     GRID  = (By.XPATH, "//table[contains(@class, 'table-striped') and contains(@class, 'clsTable')]")
-
+    MUNDO =(By.XPATH,"//table//tr[1]/td[3]//img")
 
     def click_nueva_solicitud(self):
         """Hace clic en el botón de nueva solicitud"""
@@ -71,9 +71,13 @@ class ComisionPage(BasePage):
             logger.info(f"🚀🚀🚀🚀✅✅✅✅✅🚀🚀🚀🚀 NÚMERO DIAS DISPONIBLES: {num_dias}")
          
     
+        tipo_comisión=solicitud["tipo_comision"]
         dropdown = self.wait_for_element(self.DROPDOWN_TIPO_COMISION, self.LONG_WAIT)
-        Select(dropdown).select_by_visible_text(solicitud["tipo_comision"])
+        Select(dropdown).select_by_visible_text(tipo_comisión)
         time.sleep(1)
+        if(tipo_comisión=='INTERNACIONAL'):
+             dropdown = self.wait_for_element(self.TIPO_MONEDA, self.LONG_WAIT)
+             Select(dropdown).select_by_visible_text(solicitud["tipo_moneda"])
         dropdown = self.wait_for_element(self.DROPDOWN_MEDIO_TRANSPORTE, self.LONG_WAIT)
         Select(dropdown).select_by_visible_text(solicitud["transporte"])
         time.sleep(1)
@@ -103,36 +107,26 @@ class ComisionPage(BasePage):
 
 ### Editar solicitud
     def seleccionar_menu_solicitud(self):
-        self.wait_and_click(self.MENU_SOLICITUD, self.DEFAULT_WAIT)
+        self.wait_and_click(self.get_locator_botton('Solicitud'), self.DEFAULT_WAIT)
         return self
-    
 
-
-    def editar_solicitud(self,solicitud):
-
+    def validar_comisión(self):
+         try:
+            self.wait(self.MUNDO, 2)
+            return True
+         except NoSuchElementException :
+            return False
        
-
+    def editar_solicitud(self,solicitud):
         time.sleep(1)
         self.set_checkbox(self.CHECKBOX_ANTICIPO_1, solicitud["anticipo"])
         time.sleep(2)
-        num_dias=self.get_input_value(self.INPUT_DIAS,self.LONG_WAIT)
-        logger.info(f"🚀🚀🚀🚀✅✅✅✅✅🚀🚀🚀🚀 NÚMERO DIAS EDITAR: {num_dias}")
 
         self.send_keys(self.CAMPO_FECHA_SALIDA, solicitud["data"])
         time.sleep(1)
         self.send_keys(self.CAMPO_FECHA_REGRESO, solicitud["data2"])
         time.sleep(1)
         
-        if num_dias == "0" :
-            PATH_PDF = r"C:/Users/Lenovo/Downloads/Recibo.pdf"
-            self.upload_file(self.PDF_INPUT,PATH_PDF)
-            time.sleep(2)
-            """ self.send_keys(self.EXPEDIENTE_AUTORIZA, solicitud["ex_autoriza"])
-            time.sleep(2)
-            self.send_keys(self.NUMERO_OFICIO, solicitud["num_oficio"])
-            time.sleep(2)"""
-            logger.info(f"🚀🚀🚀🚀✅✅✅✅✅🚀🚀🚀🚀 NÚMERO DIAS DISPONIBLES: {num_dias}")
-
         self.wait_and_click(self.BOTON_ACTU_ACTUALIZAR, self.DEFAULT_WAIT)
         self.wait_and_click(self.BOTON_ACTU_ACEPTAR, self.DEFAULT_WAIT)
         self.wait_and_click(self.BOTON_ACTU_CERRAR, self.DEFAULT_WAIT)

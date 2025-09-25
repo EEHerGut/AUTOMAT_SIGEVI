@@ -1,8 +1,5 @@
 Feature: Depositar dotación
-    ##Rol:Operador 
-    ##Quiero: Dar de alta una solicitud nacional/internacional sin anticipo 
-    ##Para: Atender una comisión
-    ##Hola
+
     @login_autorizador
     Scenario: Login  
         Given Inicio sesión como "AUTORIZADOR_SIGEVI"
@@ -14,8 +11,6 @@ Feature: Depositar dotación
         When Seleccionar menu de depositar
 		And Autorizar la dotación y aceptar
         Then Validar el estatus de la comisión "Depósito en proceso" autorizar solicitud depositar
-        #Depósito en proceso - comisión con dotación
-        #Solicitud de comisión autorizada - comisión sin dotación
 
 	Scenario: Cerrar sesión
 		Given Al terminar la prueba

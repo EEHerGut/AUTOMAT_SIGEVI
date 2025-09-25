@@ -13,14 +13,16 @@ class EnvioPage(BasePage):
        super().__init__(driver)
         
     def seleccionar_menu_envio(self):
-      self.wait_and_click(self.MENU_ENVIO, self.DEFAULT_WAIT)
+      
+      self.wait_and_click(self.get_locator_botton('Envío a autorización'), self.DEFAULT_WAIT)
       return self
     
     def confirmar_envío(self):
        self.wait_and_click(self.SUBMIT_BUTTON, self.DEFAULT_WAIT)
        self.wait_and_click(self.ACEPTAR_BUTTON, self.DEFAULT_WAIT)
        return self
-    
+              
+
     def validar_grid(self,record_data):
             
         self.validate_record_values(grid_locator=self.GRID_TABLE,record_data=record_data)

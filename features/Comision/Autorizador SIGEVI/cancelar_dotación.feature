@@ -1,15 +1,16 @@
-Feature: Rechazar Solicitud
-
+Feature: Cancelar dotación
+  
+    
     Scenario: Login  
         Given Inicio sesión como "AUTORIZADOR_SIGEVI"
         Then El sistema nos permite visualizar el panel principal  
         
-    @rechazar_solicitud
-    Scenario: Rechazar solicitud
-        Given Seleccionar solicitud que cuenta con el estatus "Solicitud de comisión pendiente de autorización" rechazar solicitud
-        When Seleccionar menu de rechazar
-		And Rechazar la solicitud y aceptar
-        Then Validar el estatus de la comisión "Solicitud de comisión rechazada" rechazar solicitud
+    @cancelar_dotación
+    Scenario: Cancelar dotación
+        Given Seleccionar solicitud que cuenta con el estatus "Comisión con dotación autorizada" cancelar dotación
+        When Seleccionar menu de cancelar dotación
+		And Cancelar la dotación y aceptar
+        Then Validar el estatus de la comisión "Solicitud de comisión autorizada" cancelar dotación
         #Comisión pendiente de dotación - comisión con dotación
         #Solicitud de comisión autorizada - comisión sin dotación
 	Scenario: Cerrar sesión

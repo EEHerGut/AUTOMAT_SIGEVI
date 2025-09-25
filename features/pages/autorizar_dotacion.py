@@ -18,7 +18,8 @@ class AutorizarDotacionPage(BasePage):
         super().__init__(driver)
         
     def seleccionar_menu_autorizar(self):
-        self.wait_and_click(self.MENU_AUTORIZAR, self.DEFAULT_WAIT)
+        
+        self.wait_and_click(self.get_locator_botton('Autorizar dotación'), self.DEFAULT_WAIT)
         return self
         
     def confirmar_autorizar_sin(self):

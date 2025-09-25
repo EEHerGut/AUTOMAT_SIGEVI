@@ -32,7 +32,7 @@ def step_impl(context,estatus):
     time.sleep(1)
     context.all_page.buscar_comision(NUMERO_COMISIÓN)
     record_data = {
-            'column': 'Estado ',
+            'column': 'Estado',
             'registro': estatus,
             'num': NUMERO_COMISIÓN
         }

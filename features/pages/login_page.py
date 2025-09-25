@@ -5,7 +5,7 @@ from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support import expected_conditions as EC
 from config import URLS
 from .base_page import BasePage 
-
+import time
 class LoginPage(BasePage):
         
     LOGGED_IN_INDICATOR = (By.XPATH, "//app-home//button[contains(@class, 'primary') and contains(text(), 'Continuar')]")
@@ -50,7 +50,7 @@ class LoginPage(BasePage):
 
 ##cerrar sesion
     def cerrar_sesion(self):
-        
+        time.sleep(10)
         self.wait_and_click(self.BOTON_CERRARSESION, self.DEFAULT_WAIT)
         self.wait_and_click(self.CONFIRMAR, self.DEFAULT_WAIT)
         return self

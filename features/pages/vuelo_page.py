@@ -25,7 +25,7 @@ class VuelosPage(BasePage):
         
     def seleccionar_menu_vuelos(self):
         
-        self.wait_and_click(self.MENU_VUELOS, self.DEFAULT_WAIT)
+        self.wait_and_click(self.get_locator_botton('Vuelos'), self.DEFAULT_WAIT)
         return self
         
     def click_agregar_vuelo(self):

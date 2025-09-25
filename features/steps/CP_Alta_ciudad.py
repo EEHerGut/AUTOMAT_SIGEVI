@@ -1,6 +1,6 @@
 import time
 from behave import *
-from config import CIUDAD,NUMERO_COMISIÓN
+from config import NUMERO_COMISIÓN
 from pages.ciudad_page import CiudadPage
 from pages.all_page import AllPage
 

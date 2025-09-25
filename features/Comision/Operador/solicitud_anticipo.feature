@@ -9,8 +9,8 @@ Feature: Alta de solicitud Nacional/Internacional
   
     Scenario: Alta de solicitud con anticipo - nacional
         Given Seleccionar el menu de comisiones y dar clic en el boton de Nueva Solicitud
-        Then Deberíamos ver el formulario de solicitud de comisión
-		When Completamos los campos obligatorios
+        Then Deberíamos ver el formulario de solicitud de comisión anticipo
+		When Completamos los campos obligatorios anticipo
         And Guardamos la solicitud
         Then La solicitud se crea exitosamente
     

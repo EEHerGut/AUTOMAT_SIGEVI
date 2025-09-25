@@ -1,7 +1,4 @@
 Feature: Autorizar Comprobacion
-    ##Rol:Operador 
-    ##Quiero: Dar de alta una solicitud nacional/internacional sin anticipo 
-    ##Para: Atender una comisión
 
     Scenario: Login  
         Given Inicio sesión como "AUTORIZADOR_SIGEVI"
