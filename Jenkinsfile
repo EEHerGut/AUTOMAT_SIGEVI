@@ -8,12 +8,23 @@ pipeline {
             }
         }
         
-        stage('Setup Python') {
+        stage('Install Dependencies') {
             steps {
                 bat '''
-                    python --version
-                    pip --version
-                    pip install -r requirements.txt
+                    echo "=== INSTALANDO DEPENDENCIAS MANUALMENTE ==="
+                    python -m pip install behave==1.2.6
+                    python -m pip install selenium==4.15.0
+                    python -m pip install allure-behave==2.9.45
+                '''
+            }
+        }
+        
+        stage('Verify Installation') {
+            steps {
+                bat '''
+                    echo "=== VERIFICANDO INSTALACIÓN ==="
+                    behave --version
+                    pip list | findstr behave
                 '''
             }
         }
@@ -21,11 +32,7 @@ pipeline {
         stage('Run Behave Tests') {
             steps {
                 bat '''
-                    echo "Instalando dependencias de Behave..."
-                    pip list | findstr behave
-                    pip list | findstr allure
-                    
-                    echo "Ejecutando pruebas..."
+                    echo "=== EJECUTANDO PRUEBAS ==="
                     behave features/Comision/Operador/solicitud_anticipo.feature --format pretty
                 '''
             }
@@ -34,7 +41,7 @@ pipeline {
     
     post {
         always {
-            echo "Proceso completado - Revisar logs arriba"
+            echo "✅ Proceso completado"
         }
     }
 }
