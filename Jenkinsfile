@@ -4,15 +4,37 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main',
-                url: 'https://github.com/EEHerGut/AUTOMAT_SIGEVI.git'
+                checkout scm
             }
         }
-        stage('Ejecutar Behave') {
+        
+        stage('Setup Python') {
             steps {
-                bat 'behave features/Comision/Operador/solicitud_anticipo.feature'
+                bat '''
+                    python --version
+                    pip --version
+                    pip install -r requirements.txt
+                '''
             }
         }
-   
+        
+        stage('Run Behave Tests') {
+            steps {
+                bat '''
+                    echo "Instalando dependencias de Behave..."
+                    pip list | findstr behave
+                    pip list | findstr allure
+                    
+                    echo "Ejecutando pruebas..."
+                    behave features/Comision/Operador/solicitud_anticipo.feature --format pretty
+                '''
+            }
+        }
+    }
+    
+    post {
+        always {
+            echo "Proceso completado - Revisar logs arriba"
+        }
     }
 }
