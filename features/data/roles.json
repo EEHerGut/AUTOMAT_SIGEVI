@@ -12,7 +12,7 @@
     "dashboard_url": "/autorizador/dashboard"
   },
     "AUTORIZADOR_AVIÓN": {
-    "usuario": "mainc044",
+    "usuario": "mainc048",
     "password": "B@40bR4$1607202$",
     "rol": "Autorizador de boletos de avión",
     "dashboard_url": "/autorizador/dashboard"

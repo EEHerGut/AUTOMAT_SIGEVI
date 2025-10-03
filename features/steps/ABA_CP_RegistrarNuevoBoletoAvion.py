@@ -6,17 +6,17 @@ import time
 
 
 @given('Buscar y seleccionar solicitud Boletos de Avion')
-def step_impl(context,estatus):
-
-
+def step_impl(context):
     context.all_page = AllPage(context.driver)
     context.comisionesBA = ComisionesBoletosAvionPage(context.driver)
+    context.comisionesBA.menuBoletosavion()
     context.comisionesBA.buscar_comisionBoletosAvion(ID_SOLICITUD)
+
  
-@when('Seleccionar Nuevo Registro')
+@given('Seleccionar Nuevo Registro')
 
 
-@when('Capturar la información del formulario ')
+@given('Capturar la información del formulario ')
 
 
 @then('Validar el boleto genere la factura correctamente')
