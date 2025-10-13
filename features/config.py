@@ -36,7 +36,8 @@ ARCHIVOS = {
 
 NUMERO_COMISIÓN = '00999'
 ESTATUS_COMISIÓN = 'Solicitud de comisión en registro'
-ID_SOLICITUD= '153'
+ID_SOLICITUD= '00985'
+ID_FACTURA= '863'
 
 
 #mainc048 - mainc044 - uedga193

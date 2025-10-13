@@ -1,6 +1,7 @@
 from behave import *
 from pages.GridBoletosAvion import ComisionesBoletosAvionPage
 from config import ID_SOLICITUD
+from config import ID_FACTURA
 from pages.all_page import AllPage
 import time
 
@@ -14,9 +15,12 @@ def step_impl(context):
 
  
 @given('Seleccionar Nuevo Registro')
-
+def step_impl(context):
+    context.comisionesBA.AgregarNuevaFactura()
+    
 
 @given('Capturar la información del formulario ')
+
 
 
 @then('Validar el boleto genere la factura correctamente')
