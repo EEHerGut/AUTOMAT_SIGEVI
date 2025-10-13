@@ -16,8 +16,10 @@ def step_impl(context):
  
 @given('Seleccionar Nuevo Registro')
 def step_impl(context):
-    context.comisionesBA.AgregarNuevaFactura()
-    
+    data = context.data["formularios"]['ALTA_BOLETO_AVION']
+    context.comisionesBA.AgregarNuevaFactura(data)
+  
+
 
 @given('Capturar la información del formulario ')
 

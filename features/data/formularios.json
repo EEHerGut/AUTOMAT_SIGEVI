@@ -57,6 +57,18 @@
         "tipo_archivo": "Recibo de la dotación",
         "descripción": "Descripción de Recibo de la dotación",
         "ruta":"C:/Users/Lenovo/Downloads/data.pdf"
+    },
+
+     "ALTA_BOLETO_AVION":{
+        "tipo_vuelo": "Viaje sencillo",
+        "salida": "Descripción de Recibo de la dotación",
+        "origen":"MEX - MEXICO",
+        "destino":"MZT - MAZATLAN",
+        "aerolinea":"AEROMEXICO ",
+        "num_boleto":"12345",
+        "clave": "Clave_01",
+        "fecha_factura":"",
+        "factura":"Fact_001"
     }
-}
+  }
 
