@@ -64,11 +64,11 @@
         "salida": "Descripción de Recibo de la dotación",
         "origen":"MEX - MEXICO",
         "destino":"MZT - MAZATLAN",
-        "aerolinea":"AEROMEXICO ",
+        "aerolinea":"AIR CANADA",
         "num_boleto":"12345",
-        "clave": "Clave_01",
+        "clave": "80001",
         "fecha_factura":"",
-        "factura":"Fact_001"
+        "factura":"2025001"
     }
   }
 

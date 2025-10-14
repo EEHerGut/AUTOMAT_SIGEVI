@@ -12,6 +12,5 @@ Feature: Admin boletos de avión
      Scenario: Alta de boleto de avión
         #Given El usuario se encuentra en la pantalla de grid de comisiones Boletos de Avión
         Given Buscar y seleccionar solicitud Boletos de Avion
-        And Seleccionar Nuevo Registro
-        And Capturar la información del formulario
+        And Seleccionar y Capturar Nuevo Boleto de Avión
         Then Validar el boleto genere la factura correctamente

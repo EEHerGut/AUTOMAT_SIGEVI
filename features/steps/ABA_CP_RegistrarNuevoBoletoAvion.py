@@ -14,16 +14,11 @@ def step_impl(context):
     context.comisionesBA.buscar_comisionBoletosAvion(ID_SOLICITUD)
 
  
-@given('Seleccionar Nuevo Registro')
+@given('Seleccionar y Capturar Nuevo Boleto de Avión')
 def step_impl(context):
     data = context.data["formularios"]['ALTA_BOLETO_AVION']
     context.comisionesBA.AgregarNuevaFactura(data)
-  
-
-
-@given('Capturar la información del formulario ')
-
-
+    
 
 @then('Validar el boleto genere la factura correctamente')
 
