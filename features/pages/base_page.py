@@ -2,7 +2,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from utils.logger import global_logger as logger
 from selenium.webdriver.common.by import By
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import TimeoutException,NoSuchElementException
 from config import TIEMPOS_ESPERA
 from selenium.webdriver.support.ui import Select
 from behave import *
@@ -10,6 +10,8 @@ from utils.logger import global_logger as logger
 import os
 from datetime import datetime
 from selenium.webdriver.common.by import By
+from features.locators.botones_comunes import BotonesComunes
+import time
 
 
 class BasePage:
@@ -185,30 +187,6 @@ class BasePage:
         file_input = self.wait.until(EC.presence_of_element_located(file_input_locator))
         file_input.send_keys(file_path)
 
-    def is_record_in_grid(self, column_name, expected_value, timeout=10):
-        """
-        Verifica si un registro existe en el grid buscando por columna y valor
-        Args:
-            column_name: Nombre de la columna donde buscar
-            expected_value: Valor esperado a encontrar
-            timeout: Tiempo máximo de espera
-        Returns:
-            bool: True si el registro existe, False si no
-        """
-        logger.info(f"🟢🟢🔴🔴🟢🟢🔴🔴 NOMBRE COLUMNA, VALOR ESPERADO: {column_name,expected_value}")
-        
-        try:
-            cell_locator = (By.XPATH, f"//td[@data-column='{column_name}' and contains(., '{expected_value}')]")
-            logger.info(f"🟢🟢🔴🔴🟢🟢🔴🔴 RESULTADO: {cell_locator}")
-
-            return self.is_visible(cell_locator, timeout)
-        except:
-            return False
-
-    def get_grid_records_count(self, grid_locator):
-        """Obtiene el número total de registros visibles en el grid"""
-        return len(self.find_elements((By.XPATH, f"{grid_locator}//tbody/tr[not(contains(@style, 'none'))]")))
-
     def guardar_registro_comision(self,numero_comision, estado,nac_inter,anticipo,archivo_nombre):
         try:
             directorio = "resultados_1"
@@ -278,9 +256,7 @@ class BasePage:
         Returns:set_checkbox
             bool: True si todos los valores coinciden
         """
-        
-       
-        logger.info(f"🚀🚀🚀🚀🚀🚀🚀🚀 Recorddata: {record_data}")
+        logger.info(f"-------- Recorddata: {record_data}")
         try:
             xpath_parts = []
             for column, value in record_data.items():
@@ -306,20 +282,22 @@ class BasePage:
         
     def validate_record_values_norecord(self, grid_locator, record_data, timeout=10):
         """
-        Valida múltiples valores de un registro en el grid
+        Valida que un registro aparezca en el grid
         Args:
-            record_data: Diccionario con {nombre_columna: valor_esperado}
-        Returns:set_checkbox
-            bool: True si todos los valores coinciden
+            record_data: Puede ser diccionario {columna: valor} o string para buscar en cualquier columna
         """
-        xpath_parts = []
-        for column, value in record_data.items():
-            xpath_parts.append(f"td[@data-column='{column}' and contains(., '{value}')]")
-            
+        if isinstance(record_data, str):
+            # Si es string, buscar en cualquier columna
+            full_xpath = f"{grid_locator}//tr[td[contains(., '{record_data}')]]"
+        else:
+            # Si es diccionario, buscar por columnas específicas
+            xpath_parts = []
+            for column, value in record_data.items():
+                xpath_parts.append(f"td[@data-column='{column}' and contains(., '{value}')]")
             full_xpath = f"{grid_locator}//tr[{' and '.join(xpath_parts)}]"
-            resultado = self.is_visible((By.XPATH, full_xpath), timeout)
-
-            return resultado      
+        
+        resultado = self.is_visible((By.XPATH, full_xpath), timeout)
+        return resultado
         
     def get_input_value(self, locator, timeout=None):
         """
@@ -340,7 +318,7 @@ class BasePage:
             return element.get_attribute('value') or ''
         
         except TimeoutException:
-            logger.warning(f"⏰ Timeout al buscar elemento: {locator}")
+            logger.warning(f"[TIMEOUT] Timeout al buscar elemento: {locator}")
             return ''
         except Exception as e:
             logger.error(f"❌ Error al obtener valor del input {locator}: {str(e)}")
@@ -352,27 +330,101 @@ class BasePage:
     def zoom_page(self):
         self.driver.execute_script("document.body.style.zoom='80%'")
 
-    def is_element_visible_data(self, locator):
+
+    def is_button_visible(self, locator, by=By.CSS_SELECTOR, timeout=10):
         """
-        Verifica si un elemento es visible en la página
-        :param locator: Tupla (By, selector) o string (CSS selector)
-        :param timeout: Tiempo máximo de espera (opcional)
-        :return: Boolean - True si es visible, False si no
+        Verifica si un botón está visible en el DOM
+        
+        Args:
+            locator: Puede ser string o tupla (by, locator)
+            by: Tipo de selector (solo si locator es string)
+            timeout: Tiempo máximo de espera
         """
+        try:
+            # Si locator es una tupla, desempaquetar
+            if isinstance(locator, tuple) and len(locator) == 2:
+                by, locator_value = locator
+            else:
+                locator_value = locator
+                
+            element = WebDriverWait(self.driver, timeout).until(
+                EC.visibility_of_element_located((by, locator_value))
+            )
+            # Verificación adicional para asegurar que no es None
+            if element is None:
+                return False
+            return element.is_displayed()
+        except (TimeoutException, NoSuchElementException):
+            return False
+        except Exception as e:
+            print(f"Error inesperado en is_button_visible: {e}")
+            return False
+        
+        # === MÉTODOS CRUD GENÉRICOS ===
+    
+    def click_agregar(self, boton_nuevo_locator):
+        """Método genérico para agregar nuevo registro"""
+        try:
+             self.wait_and_click(boton_nuevo_locator, 2)
+        except TimeoutException:
+             self.wait_and_click(boton_nuevo_locator,self.DEFAULT_WAIT)
+        return self
+    
+    def guardar_registro(self, campos_data, tiempo_espera=2):
+        """Método genérico para guardar cualquier registro"""
+        time.sleep(tiempo_espera)
+        
+        # Llenar campos dinámicamente
+        for locator, valor in campos_data.items():
+             self.send_keys(locator, valor)
+             time.sleep(1)
+        
+        # Flujo común de guardado
+        try:
+         self.click(BotonesComunes.BOTON_CREAR)
+        except:
+            self.click(BotonesComunes.BOTON_CREAR_ESTADO)
+            
+        time.sleep(1)
+        self.click(BotonesComunes.BOTON_CONFIRMAR)
+        time.sleep(1)
+        self.click(BotonesComunes.BOTON_CONF)
+        return self
+    
+    def validar_grid(self, record_data):
+        """Validar registro en grid"""
+        self.validate_record_values_norecord(
+            grid_locator=BotonesComunes.GRID, 
+            record_data=record_data
+        )
+        return self
+    
+    def editar_registro(self, campos_data, tiempo_espera=2):
+        """Método genérico para editar registro"""
+        self.wait_and_click(BotonesComunes.BOTON_MODIFICAR,self.DEFAULT_WAIT)
+        time.sleep(tiempo_espera)
+        
+        # Llenar campos dinámicamente
+        for locator, valor in campos_data.items():
+             self.send_keys(locator, valor)
         
         try:
-            # Si el locator es string, asumimos que es CSS selector
-            if isinstance(locator, str):
-                locator = (By.XPATH, locator)
+         self.click(BotonesComunes.BOTON_CREAR)
+        except:
+            self.click(BotonesComunes.BOTON_CREAR_ESTADO)
             
-            element = WebDriverWait(self.driver, self.DEFAULT_WAIT).until(
-                EC.visibility_of_element_located(locator)
-            )
-            return True
-        except TimeoutException:
-            return False
-        except Exception:
-            return False
+        self.wait_and_click(BotonesComunes.BOTON_CONFIRMAR,self.DEFAULT_WAIT)
+        time.sleep(3)
+        self.wait_and_click(BotonesComunes.BOTON_CONF,self.DEFAULT_WAIT)
+        return self
     
-        
-
+    def activar_desactivar_registro(self):
+        """Método genérico para activar/desactivar"""
+        self.wait_and_click(BotonesComunes.SWITCH,self.DEFAULT_WAIT)
+        time.sleep(2)
+        self.wait_and_click(BotonesComunes.BOTON_CONFIRMAR,self.DEFAULT_WAIT)
+        time.sleep(2)
+        self.wait_and_click(BotonesComunes.BOTON_CONF,self.DEFAULT_WAIT)
+        return self
+    
+    

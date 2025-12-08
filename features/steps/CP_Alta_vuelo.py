@@ -20,7 +20,7 @@ def step_impl(context,estatus):
   
 @when('Seleccionar el menu de vuelos')
 def step_impl(context):
-    context.all_page = AllPage(context.driver)
+    
     context.vuelo_page.seleccionar_menu_vuelos()
 
 @when('Dar clic en el botón Agregar vuelo y seleccionar tipo de vuelo')
@@ -32,12 +32,13 @@ def step_impl(context):
 @when('Agregar datos de vuelo, seleccionar agregar y selecionar Aceptar - Aceptar')
 def step_impl(context):
     data = context.data["formularios"]['VUELO']
+    Tipo_vuelo=context.data["formularios"]["SIN_ANTICIPO"]["tipo_comision"]
     time.sleep(1)
     context.all_page.refresh_page()
     context.vuelo_page.click_agregar_vuelo()
     context.vuelo_page.seleccionar_tipo_vuelo(data)
     time.sleep(2)
-    context.vuelo_page.ingresar_datos_vuelo(data)
+    context.vuelo_page.ingresar_datos_vuelo(data,Tipo_vuelo)
     context.vuelo_page.guardar_vuelo()
     context.all_page.refresh_page()
     time.sleep(2)

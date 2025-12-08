@@ -58,7 +58,7 @@ class ComisionPage(BasePage):
         # Completar otros campos
         self.send_keys(self.CAMPO_EXPEDIENTE, solicitud["expediente"])
         num_dias=self.get_input_value(self.INPUT_DIAS,self.LONG_WAIT)
-        logger.info(f"🚀🚀🚀🚀✅✅✅✅✅🚀🚀🚀🚀 NÚMERO DIAS DISPONIBLES: {num_dias}")
+        logger.info(f"[SUCCESS] [OK] NÚMERO DIAS DISPONIBLES: {num_dias}")
 
         if num_dias == "0" :
             PATH_PDF = r"C:/Users/Lenovo/Downloads/Recibo.pdf"
@@ -68,7 +68,7 @@ class ComisionPage(BasePage):
             time.sleep(2)
             self.send_keys(self.NUMERO_OFICIO, solicitud["num_oficio"])
             time.sleep(2)
-            logger.info(f"🚀🚀🚀🚀✅✅✅✅✅🚀🚀🚀🚀 NÚMERO DIAS DISPONIBLES: {num_dias}")
+            logger.info(f"[SUCCESS] [OK] NÚMERO DIAS DISPONIBLES: {num_dias}")
          
     
         tipo_comisión=solicitud["tipo_comision"]
@@ -101,26 +101,16 @@ class ComisionPage(BasePage):
         self.wait_and_click(self.BOTON_CONFIRMAR_GUARDAR, self.DEFAULT_WAIT)
         self.click(self.BOTON_CERRAR_MODAL)
         return self
-
-
-             
-
+    
 ### Editar solicitud
     def seleccionar_menu_solicitud(self):
         self.wait_and_click(self.get_locator_botton('Solicitud'), self.DEFAULT_WAIT)
         return self
-
-    def validar_comisión(self):
-         try:
-            self.wait(self.MUNDO, 2)
-            return True
-         except NoSuchElementException :
-            return False
        
     def editar_solicitud(self,solicitud):
-        time.sleep(1)
+        time.sleep(3)
         self.set_checkbox(self.CHECKBOX_ANTICIPO_1, solicitud["anticipo"])
-        time.sleep(2)
+        time.sleep(1)
 
         self.send_keys(self.CAMPO_FECHA_SALIDA, solicitud["data"])
         time.sleep(1)

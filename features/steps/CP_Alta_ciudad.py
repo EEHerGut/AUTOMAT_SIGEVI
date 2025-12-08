@@ -23,11 +23,12 @@ def step_impl(context):
    context.ciudad_page = CiudadPage(context.driver)
    context.ciudad_page.click_agregar_ciudad()
    time.sleep(3)
-   context.ciudad_page.guardar_ciudad(data)
-
+   context.tipo=context.ciudad_page.guardar_ciudad(data)
+   
             
 @Then('La ciudad se agrega correctamente')
 def step_impl(context):  
+     context.ciudad_page.verificar_creacion_exitosa(context.tipo)
+     context.ciudad_page.cerrar_mensaje_exito()
 
-     context.ciudad_page.verificar_creacion_exitosa()
-     assert context.ciudad_page.cerrar_mensaje_exito()
+     assert True

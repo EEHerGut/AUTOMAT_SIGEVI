@@ -5,7 +5,7 @@ Feature: Admin boletos de avión
 
     @login_AutorizadorBoletosAvion
     Scenario: Login  
-        Given Inicio sesión como "AUTORIZADOR_AVIÓN"
+        Given Inicio sesion como "AUTORIZADOR_AVIÓN"
         Then El sistema nos permite visualizar el panel principal
 
     @AltaBoletoAvión

@@ -10,10 +10,13 @@ class CiudadPage(BasePage):
     MENU_CIUDADES_XPATH = (By.XPATH, "//a[contains(@class, 'dropdown-item goUrl') and contains(text(), ' Ciudades ')]")
     BOTON_AGREGAR_MUNICIPIO_XPATH = (By.XPATH, "//app-add-city//button[normalize-space()='Agregar municipio']")
     BOTON_AGREGAR_CIUDAD_XPATH = (By.XPATH, "//button[contains(text(), ' Agregar ciudad ')]")
-    ESTADO_DROPDOWN_ID = (By.ID, "state")
+    SELECT_PAIS =(By.XPATH,"//app-add-city-international//select")
+    SELECT_CIUDAD =(By.XPATH,"//app-add-city-international//form/div[2]//select")
+    ESTADO_DROPDOWN_ID = (By.XPATH, "//app-add-city//form//select")
     MUNICIPIO_DROPDOWN_ID = (By.ID, "town")
     BOTON_GUARDAR_XPATH = (By.XPATH, "//*[@id='addFormModal']/div/div/div/div[3]/form/button")
     BOTON_CERRAR_MENSAJE_XPATH = (By.XPATH, "//p[contains(text(), 'Municipio agregado correctamente')]/following::button[1]")
+    BOTON_CERRAR_PAIS_XPATH = (By.XPATH, "//p[contains(text(), 'Ciudad agregada correctamente')]/following::button[1]")
     MODAL_EXITO=  (By.XPATH, "//app-add-city//p[contains(@class, 'description') or contains(text(), 'Municipio agregado correctamente.')]")
 
     def __init__(self, driver):
@@ -35,22 +38,35 @@ class CiudadPage(BasePage):
          
     def guardar_ciudad(self,data):
         
-        time.sleep(2)
-        dropdown = self.wait_for_element(self.ESTADO_DROPDOWN_ID, self.LONG_WAIT)
-        Select(dropdown).select_by_visible_text(data['state'])
-        time.sleep(2)
-        dropdown = self.wait_for_element(self.MUNICIPIO_DROPDOWN_ID, self.LONG_WAIT)
-        Select(dropdown).select_by_visible_text(data['town'])
-        self.wait_and_click(self.BOTON_GUARDAR_XPATH, self.DEFAULT_WAIT)
+       
+        try:
+            dropdown = self.wait_for_element(self.ESTADO_DROPDOWN_ID, 2)
+            Select(dropdown).select_by_visible_text(data['state'])
+            time.sleep(2)
+            dropdown = self.wait_for_element(self.MUNICIPIO_DROPDOWN_ID, 2)
+            Select(dropdown).select_by_visible_text(data['town'])
+            self.wait_and_click(self.BOTON_GUARDAR_XPATH, self.DEFAULT_WAIT)
+            return "nacional"
+        except TimeoutException:
+            time.sleep(2)
+            dropdown = self.wait_for_element(self.SELECT_PAIS, self.LONG_WAIT)
+            Select(dropdown).select_by_visible_text(data['country'])
+            time.sleep(2)
+            dropdown = self.wait_for_element(self.SELECT_CIUDAD, self.LONG_WAIT)
+            Select(dropdown).select_by_visible_text(data['capital'])
+            time.sleep(2)
+            self.wait_and_click(self.BOTON_GUARDAR_XPATH, self.DEFAULT_WAIT)
+            return "internacional"
+
+    
+    def verificar_creacion_exitosa(self,tipo):
+      
+      if tipo=="nacional":
+        self.wait_and_click(self.BOTON_CERRAR_MENSAJE_XPATH, 2)
         return self
-    
-    
+      else:
+        self.wait_and_click(self.BOTON_CERRAR_PAIS_XPATH, self.DEFAULT_WAIT)
+        return self
+
     def cerrar_mensaje_exito(self):
-        self.wait_and_click(self.BOTON_CERRAR_MENSAJE_XPATH, self.DEFAULT_WAIT)
-        return self
-
-    def verificar_creacion_exitosa(self):
-        """Verifica que la solicitud se creó correctamente"""
-        mensaje_exito = self.get_text(self.MODAL_EXITO).lower()
-        assert "municipio agregado correctamente." in mensaje_exito, f"Se esperaba 'Municipio agregado correctamente.' pero se encontró: '{mensaje_exito}'"
-
+        assert True

@@ -1,0 +1,20 @@
+{
+  "AEROLINEA": {
+    "nombre_aerolinea": "AUTOMAT_TEST_PRG-AIRLINES"
+  },
+  "MONEDA": {
+    "nombre_moneda": "PLK",
+    "tipo_cambio":"18.77",
+    "nombre_moneda_m": "QPG",
+    "tipo_cambio_m":"0.01"
+  },
+  "PAIS": {
+    "nombre_pais": "AUTOMAT_TEST_ PAIS CONGO",
+    "nombre_pais_m": "AUTOMAT_TEST_CONGO_EDITADO"
+  },
+  "ESTADO": {
+    "nombre_estado": "AUTOMAT_TEST_NEWMEXICO",
+    "nombre_estado_m": "AUTOMAT_TEST_NEMWEXICO"
+  }
+}
+

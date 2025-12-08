@@ -1,0 +1,20 @@
+{
+  "OPERADOR_SIGEVI": {
+    "usuario": "JENKINS_USERNAME",
+    "password": "JENKINS_PASSWORD",
+    "rol": "Operador SIGEVI",
+    "dashboard_url": "/operador/dashboard"
+  },
+  "AUTORIZADOR_SIGEVI": {
+    "usuario": "JENKINS_USERNAME",
+    "password": "JENKINS_PASSWORD",
+    "rol": "Autorizador SIGEVI",
+    "dashboard_url": "/autorizador/dashboard"
+  },
+    "AUTORIZADOR_AVIÓN": {
+    "usuario": "JENKINS_USERNAME",
+    "password": "JENKINS_PASSWORD",
+    "rol": "Autorizador de boletos de avión",
+    "dashboard_url": "/autorizador/dashboard"
+  }
+}

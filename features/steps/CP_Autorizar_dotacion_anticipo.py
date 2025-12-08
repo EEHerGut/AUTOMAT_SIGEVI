@@ -30,13 +30,7 @@ def step_impl(context,estatus):
     time.sleep(1)
     context.all_page.menu_comision()
     time.sleep(1)
-    context.all_page.buscar_comision(NUMERO_COMISIÓN)
-    record_data = {
-            'column': 'Estado ',
-            'registro': estatus,
-            'num': NUMERO_COMISIÓN
-        }
-
+    record_data=context.all_page.registro_txt(NUMERO_COMISIÓN,estatus)
     assert context.autorizar_page.validar_grid(record_data), \
                 f"El registro estado con registro Solicitud de comisión pendiente de autorización no apareció en el grid"
  

@@ -50,7 +50,7 @@ class LoginPage(BasePage):
 
 ##cerrar sesion
     def cerrar_sesion(self):
-        time.sleep(10)
+        time.sleep(1)
         self.wait_and_click(self.BOTON_CERRARSESION, self.DEFAULT_WAIT)
         self.wait_and_click(self.CONFIRMAR, self.DEFAULT_WAIT)
         return self

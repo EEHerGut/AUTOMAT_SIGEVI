@@ -1,6 +1,7 @@
 from selenium.webdriver.common.by import By
 from .base_page import BasePage
 from selenium.webdriver.support.ui import Select
+import time
 
 
 class ArchivosPage(BasePage):
@@ -32,6 +33,18 @@ class ArchivosPage(BasePage):
         self.wait_and_click(self.CONFIRMAR_BUTTON, self.DEFAULT_WAIT)
         return self
         
+    def click_archivo_dep(self,data):
+        
+        self.wait_and_click(self.AGREGAR_ARCHIVO_BUTTON, self.DEFAULT_WAIT)
+        time.sleep(1)
+        dropdown = self.wait_for_element(self.ARCHIVO_DROPDOWN, self.LONG_WAIT)
+        Select(dropdown).select_by_visible_text(data['tipo_archivo'])
+        self.send_keys(self.AREA,data['descripción'])
+        self.upload_file(self.FILE_ARCHIVE,data['ruta'])
+        self.wait_and_click(self.AGREGAR_BUTTON, self.DEFAULT_WAIT)
+        self.wait_and_click(self.CONFIRMAR_BUTTON, self.DEFAULT_WAIT)
+        return self
+
     def validar_grid(self,record_data):
             
             self.validate_record_values_norecord(grid_locator=self.GRID,record_data=record_data)

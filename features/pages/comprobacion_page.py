@@ -49,14 +49,26 @@ class ComprobacionPage(BasePage):
        
        def cargar_formulario_comprobación(self,data):
              ##concepto,importe,concepto_impuesto,monto
-             time.sleep(2)
+        
              pyautogui.click(x=768, y=350) 
              time.sleep(1)
+             pyautogui.click(x=768, y=351) 
+             time.sleep(2)
+             pyautogui.click(x=768, y=352)
+             time.sleep(2)
              pyautogui.press("left")
-             time.sleep(1)
+             
+            
              pyautogui.click(x=768, y=390) 
-             time.sleep(1)
-             pyautogui.press("right")
+             time.sleep(2)
+             pyautogui.click(x=768, y=391)
+             pyautogui.click(x=768, y=392)
+             pyautogui.click(x=768, y=393)
+             time.sleep(2)
+             pyautogui.press("left")
+             pyautogui.click(x=768, y=392)
+             time.sleep(2)
+             pyautogui.press("left")
         
              dropdown = self.wait_for_element(self.CONCEPTO_GASTO, self.LONG_WAIT)
              Select(dropdown).select_by_visible_text(data['concepto'])
@@ -66,6 +78,7 @@ class ComprobacionPage(BasePage):
              self.wait_and_click(self.BOTON_IMPUESTO, self.DEFAULT_WAIT)
              self.select_by_value(self.DROP_IMPUESTO,data['concepto_impuesto'])
              self.send_keys(self.MONTO_IMPUESTO,data['monto_impuesto'])
+             time.sleep(2)
              self.wait_and_click(self.BOTON_AC_IMPUESTO, self.DEFAULT_WAIT)
              self.wait_and_click(self.BOTON_CONF_IMPUESTO, self.DEFAULT_WAIT)
 

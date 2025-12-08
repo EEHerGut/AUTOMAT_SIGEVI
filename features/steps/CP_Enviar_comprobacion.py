@@ -1,5 +1,5 @@
 from behave import *
-from pages.enviar_comprobacion import EnviarcomprobacionPage
+from features.pages.enviar_comprobacion_page import EnviarcomprobacionPage
 from config import NUMERO_COMISIÓN
 from pages.all_page import AllPage
 import time

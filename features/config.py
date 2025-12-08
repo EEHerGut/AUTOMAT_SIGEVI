@@ -22,6 +22,7 @@ TIEMPOS_ESPERA = {
 USUARIOS = load_json("roles.json")
 ENV_CONFIG = load_json("entornos.json")["develop"]  # Cambiar a "prod" en producción
 FORM_DATA = load_json("formularios.json")
+CAT_DATA = load_json("catalogos.json")
 
 ARCHIVOS = {
     "RECIBO_PDF": str(Path.home() / "Downloads" / "Recibo.pdf"),
@@ -34,95 +35,34 @@ ARCHIVOS = {
 #Comisión pendiente de comprobación
 #Solicitud de comisión pendiente de autorización
 
-NUMERO_COMISIÓN = '00999'
+NUMERO_COMISIÓN = '00065'
 ESTATUS_COMISIÓN = 'Solicitud de comisión en registro'
 ID_SOLICITUD= '00985'
 ID_FACTURA= '863'
+
 
 
 #mainc048 - mainc044 - uedga193
 USUARIOS = {
     "OPERADOR_SIGEVI": {
         "usuario": "mainc044",
-        "password": "B@40bR4$1607202$",
+        "password": "Banobras21102025",
         "rol": "Operador SIGEVI"
     },
     "Autorizador_SIGEVI": {
         "usuario": "mainc044",
-        "password": "B@40bR4$1607202$",
+        "password": "Banobras21102025",
         "rol": "Autorizador SIGEVI"
     }
 }
 
 # --- URLs del sistema ---
+BASE_URL = "https://frontend-sigevi-qa.banobras.gob.mx"
 
-BASE_URL = "https://frontend-sigevi-develop.banobras.gob.mx"
+#--- BASE_URL = "https://frontend-sigevi-develop.banobras.gob.mx" ---
 
 URLS = {
     "BASE":  f"{BASE_URL}/auth/login",
     "COMISIONES": f"{BASE_URL}/comision/comisiones"
 }
 
-##Tlaxcala
-##Apizaco
-
-##Guanajuato
-##Celaya
-CIUDAD = {
-    "state": "Guanajuato",
-    "town": "Celaya"
-}
-
-VUELO = {
-    "trip": "Viaje sencillo",
-    "day_off": "14/07/2025",
-    "origen": "MEX - MEXICO",
-    "arrive": "TLC - TOLUCA",
-    "aeroline": "AEROMEXICO",
-}
-
-GASTO = {
-    "concept": "Gasolina",
-    "amount": "2342.13"
-}
-
-
-
-SOLICITUD_ANTICIPO={
-        "anticipo": "Sí",
-        "data": "08/15/2025",
-        "data2": "08/17/2025",
- }
-
-COMPLEMENTO = {
-    "FAVOR": {
-        "pdf":r"C:\Users\Lenovo\Downloads\Recibo.pdf",
-        "xml":r"C:\Users\Lenovo\Downloads\9XMLfiscal.xml",
-        "concepto_oper": "Hospedaje",
-        "importe": "476.23",
-        "motivo": "complemento nacional a favor"
-    },
-     "CONTRA": {
-        "expediente": "55735",
-        "tipo_comision": "NACIONAL",
-        "transporte": "Avión",
-        "fecha_salida": "07/2025/14",
-        "fecha_regreso": "07/2025/16",
-        "expediente_autoriza": "48496",
-        "area_gasto": "220000",
-        "objetivo": "Comisión con anticipo nacional "
-    }
-}
-
-IMPUESTO = {
-        "id_complemento": "1",
-        "concepto": "IVA por prestación de servicios",
-        "monto": "230.32"
-}
-
-COMPROBACION ={
-        "concepto":"Alimentos",
-        "monto":"286.11",
-        "concepto_impuesto": "19",
-        "monto_impuesto":"129.41"
-}

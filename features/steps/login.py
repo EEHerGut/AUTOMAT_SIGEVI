@@ -6,7 +6,7 @@ from pages.login_page import LoginPage
 from utils.data_loader import load_json
 
 
-@given('Inicio sesión como "{rol}"')
+@given('Inicio sesion como "{rol}"')
 def step_impl(context,rol):
         # Inicializa la página de login si no existe
        

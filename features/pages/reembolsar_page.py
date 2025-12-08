@@ -14,7 +14,7 @@ class ReembolsarPage(BasePage):
         super().__init__(driver)
         
     def seleccionar_menu_reembolsar(self):
-        self.wait_and_click(self.MENU_REEMBOLSAR, self.DEFAULT_WAIT)
+        self.wait_and_click(self.get_locator_botton('Solicitar reembolso'), self.DEFAULT_WAIT)
         return self
         
     def confirmar_autorizar(self):

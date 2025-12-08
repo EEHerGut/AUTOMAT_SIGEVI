@@ -1,5 +1,6 @@
 from behave import *
 from pages.comprobacion_page import ComprobacionPage
+from features.pages.enviar_comprobacion_page import EnviarcomprobacionPage
 from pages.all_page import AllPage
 from config import NUMERO_COMISIÓN
 import time
@@ -9,6 +10,7 @@ import time
 def step_impl(context,estatus):
         
         context.comprobacion = ComprobacionPage(context.driver)
+        context.enviar = EnviarcomprobacionPage(context.driver)
         context.all_page = AllPage(context.driver)
         context.all_page.menu_comision()
         time.sleep(4)
@@ -19,8 +21,8 @@ def step_impl(context,estatus):
 def step_impl(context):
         context.comprobacion.clic_consultar()
 
-@When('Agregar comprobación con gasto con comprobante y agregar impuesto')
-def step_impl(context):
+@When('Agregar comprobación con gasto con comprobante y agregar impuesto, pasar al estatus "{estatus}"')
+def step_impl(context,estatus):
         data = context.data["formularios"]['COMPROBACION']
         context.comprobacion = ComprobacionPage(context.driver)
         context.comprobacion.clic_comprobar()
@@ -30,15 +32,20 @@ def step_impl(context):
         context.comprobacion.cargar_archivos(PATH_PDF,PATH_XML)
         context.comprobacion.cargar_formulario_comprobación(data)
 
-@then('Visualizar el registro creado en el grid de comprobación')
-def step_impl(context):
-      
-        record_data = {
-            'column': 'Concepto',
-            'registro': 'Alimentos',
-            'num': False
-        }
+        time.sleep(2)
+        context.all_page.menu_comision()
+        context.all_page.buscar_comision(NUMERO_COMISIÓN)
+        context.all_page.seleccionar_comision(estatus)
+        time.sleep(1)
+        context.enviar.seleccionar_menu()
+        time.sleep(1)
+        context.enviar.confirmar_envio()
 
-        assert context.comprobacion.validar_grid(record_data), \
-                f"El registro no apareció en el grid"
-        
+@then('Validar el estatus de la comisión "{estatus}" comprobación')
+def step_impl(context,estatus):
+    context.all_page.buscar_comision(NUMERO_COMISIÓN)
+    time.sleep(1)
+    record_data=context.all_page.registro_txt(NUMERO_COMISIÓN,estatus)
+    assert context.depositar_page.validar_grid(record_data), \
+                f"El registro estado con registro Solicitud de comisión pendiente de autorización no apareció en el grid"
+     

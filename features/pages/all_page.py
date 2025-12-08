@@ -2,14 +2,46 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select, WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from .base_page import BasePage
-from selenium.common.exceptions import (NoSuchElementException, 
-                                      StaleElementReferenceException,
-                                      TimeoutException)
+from selenium.common.exceptions import (
+    NoSuchElementException, 
+    StaleElementReferenceException,
+    TimeoutException,
+    ElementClickInterceptedException
+)
 from utils.logger import global_logger as logger
 import logging
 import time
+from functools import wraps
 
-
+# Decorador para reintentos
+def retry_on_failure(max_attempts=3, delay=1):
+    """Decorador para reintentar operaciones fallidas"""
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            attempts = 0
+            last_exception = None
+            
+            while attempts < max_attempts:
+                try:
+                    return func(*args, **kwargs)
+                except (StaleElementReferenceException, 
+                       ElementClickInterceptedException,
+                       TimeoutException) as e:
+                    attempts += 1
+                    last_exception = e
+                    logger.warning(f"Intento {attempts}/{max_attempts} fallido para {func.__name__}: {str(e)}")
+                    if attempts < max_attempts:
+                        time.sleep(delay)
+                        # Refrescar la página si es un StaleElement
+                        if isinstance(e, StaleElementReferenceException):
+                            args[0].driver.refresh()  # self es el primer argumento
+                            time.sleep(1)
+            
+            logger.error(f"Fallo después de {max_attempts} intentos en {func.__name__}")
+            raise last_exception
+        return wrapper
+    return decorator
 
 
 class AllPage(BasePage):
@@ -17,50 +49,76 @@ class AllPage(BasePage):
   def __init__(self, driver):
         super().__init__(driver)
 
-       # Locators
+        # Locators actualizados y más organizados
+        # ============ LOCATORS DE NAVEGACIÓN ============
+        
+        
         self.GRID_TITLE = (By.XPATH, "//*[@id='body']/main/app-root/app-commissions/div/div/h1")
         self.SEARCH_FIELD = (By.ID, "table-filtering-search")
         self.BOTON_ESTADO = lambda estado: (By.XPATH, f"//button[contains(text(), '{estado}')]")
-        self.BOTON_COMISION= (By.XPATH, "//a[contains(text(), 'Comisión')]")
-        self.BOTON_COMISIONES= (By.XPATH, "//a[contains(text(), 'Comisiones')]")
-        self.ETIQUETA_COMISION= (By.XPATH, "//h1[contains(text(), 'Comisiones')]")
+        self.CATALOGO_MENU = lambda estado: (By.XPATH, f"//a[contains(text(), '{estado}')]")
+        
+        
+       
+        
         self.MUNDO =(By.XPATH,"//table//tr[1]/td[3]//img")
+        self.BILLETE =(By.XPATH,"//tbody/tr[1]/td[5]//img")
         self.ANTICIPO =(By.XPATH,"//table[contains(@class, 'table')]//tr/td[5]//img")
         self.BOTON_AVION=(By.XPATH,"//table//tr[1]//td[position()=6]//i")
+        
+        #MENU COMISIONES
+        self.ETIQUETA_COMISION= (By.XPATH, "//h1[contains(text(), 'Comisiones')]")
+        self.BOTON_COMISION= (By.XPATH, "//a[contains(text(), 'Comisión')]")
+        self.BOTON_COMISIONES= (By.XPATH, "//a[contains(text(), 'Comisiones')]")
 
+         #MENU CATÁLOGOS
+        self.BOTON_CONFIGURACIÓN= (By.XPATH, "//a[normalize-space()='Configuración']")
+        self.BOTON_CATÁLOGOS= (By.XPATH, "//a[contains(text(), 'Catálogos')]")
+        
+    
 
   def menu_comision(self):
     self.zoom_page()
     if self.es_elemento_visible("//h1[contains(text(), 'Comisiones')]"):
-          logger.info(f"✅✅✅✅✅Elemento: es visible")
+          logger.info(f"[OK]Elemento: es visible")
     else:
-          logger.error(f"❌❌❌❌❌❌ El elemento NO existe en el DOM")
+          logger.error(f"[ERROR] El elemento NO existe en el DOM")
           self.wait_for_element(self.BOTON_COMISION, self.LONG_WAIT)
           self.wait_and_click(self.BOTON_COMISION, self.DEFAULT_WAIT)
           self.wait_and_click(self.BOTON_COMISIONES, self.DEFAULT_WAIT)
+    
+  def menu_catalogo(self,name):
+    self.zoom_page()
+    if self.es_elemento_visible("//h1[contains(text(), 'DATA')]"):
+          logger.info(f"[OK]Elemento: es visible")
+    else:
+          logger.error(f"[ERROR] El elemento NO existe en el DOM")
+          self.wait_and_click(self.BOTON_CONFIGURACIÓN, self.DEFAULT_WAIT)
+          self.wait_and_click(self.BOTON_CATÁLOGOS, self.DEFAULT_WAIT)
+          self.wait_and_click(self.CATALOGO_MENU(name),self.LONG_WAIT)         
 
-     
-        
-    """   elemento = WebDriverWait(self.driver, 2).until(
-                EC.visibility_of_element_located(self.ETIQUETA_COMISION)
-            )
-        
+    
+  def validar_comisión(self):
+         try:
+            self.wait_for_element(self.MUNDO, 2)
+            return True
+         except NoSuchElementException :
+            return False
+         
+  def validar_billete(self):
+         try:
+            self.wait_for_element(self.BILLETE, 2)
+            return True
+         except NoSuchElementException :
+            return False
 
-        logger.info(f"🚀🚀🚀🚀🚀🚀🚀🚀 Elemento: {elemento.text}")
-        logger.info(f"🚀🚀🚀🚀🚀🚀🚀🚀 Elemento: {elemento.is_displayed}")
-        
-        if elemento.is_displayed():
-            self.wait_for_element(self.BOTON_COMISION, self.LONG_WAIT)
-        else:
-            self.wait_for_element(self.BOTON_COMISION, self.LONG_WAIT)
-            self.wait_and_click(self.BOTON_COMISION, self.DEFAULT_WAIT)
-            self.wait_and_click(self.BOTON_COMISIONES, self.DEFAULT_WAIT)
 
-        return self"""
+            
   
   def buscar_comision(self, numero_comision):
         """Busca una comisión por su número"""
-        logger.info(f"✅✅✅✅✅Busca una comisión por su número")
+        logger.info(f"[OK]Busca una comisión por su número")
+        time.sleep(1)
         try:
             self.wait_for_element(self.SEARCH_FIELD, self.LONG_WAIT)
             self.send_keys(self.SEARCH_FIELD,numero_comision)
@@ -134,7 +192,7 @@ class AllPage(BasePage):
             variable ="INTERNACIONAL"
             return variable
         except TimeoutException  :
-            variable="MACIONAL"
+            variable="NACIONAL"
             return variable
 
   def validar_anticipo(self):
@@ -145,8 +203,18 @@ class AllPage(BasePage):
          except TimeoutException  :
             variable="SIN ANTICIPO"
             return variable
-         
-
-
-
+ 
+  def registro_txt(self,numero_comision,estatus):
+       
+        self.buscar_comision(numero_comision)
+        tipo_comision=self.validar_tipo_comisión()
+        tipo_anticipo=self.validar_anticipo()
+        record_data = {
+                    'column': 'Estado',
+                    'registro': estatus,
+                    'num': numero_comision,
+                    'nac/inter': tipo_comision,
+                    'anticipo': tipo_anticipo
+                    }
+        return record_data
     

@@ -1,73 +1,82 @@
 Timestamp,Número_Comisión,Estado,Anticipo
-2025-08-26 10:23:26,917,Solicitud de comisión pendiente de autorización,N/A
-2025-08-26 11:59:19,918,Solicitud de comisión en registro,Con Anticipo
-2025-08-26 12:09:37,919,Solicitud de comisión en registro,N/A
-2025-08-26 12:43:46,920,Solicitud de comisión en registro,Con Anticipo
-
-2025-08-26 19:52:48,921,Solicitud de comisión en registro
-2025-08-26 19:54:58,00921 ,Solicitud de comisión en registro
-2025-08-26 20:24:25,00922,Solicitud de comisión autorizada
-2025-08-26 20:39:45,00923,Solicitud de comisión en registro
-2025-08-26 20:43:25,00924,Solicitud de comisión pendiente de autorización
-2025-08-26 20:45:00,00925,Solicitud de comisión en registro
-2025-08-26 22:07:08,00926,Solicitud de comisión en registro
-2025-08-27 12:58:59,00927,Solicitud de comisión autorizada
-2025-08-27 13:32:06,00928,Solicitud de comisión en registro
-2025-08-27 13:35:02,00929,Solicitud de comisión en registro
-2025-08-27 13:37:19,00930,Solicitud de comisión en registro
-2025-08-27 13:42:45,00931,Solicitud de comisión en registro
-2025-08-27 13:48:49,00932,Solicitud de comisión en registro
-2025-08-29 10:41:00,00933,Solicitud de comisión en registro
-2025-09-02 11:14:36,00935,Comprobación autorizada a favor del comisionado
-2025-08-29 13:12:37,00936,Solicitud de comisión en registro
-2025-09-01 14:31:40,00937,Solicitud de comisión en registro
-2025-09-02 13:23:08,00938,Comisión con comprobación pendiente de autorización
-2025-09-02 16:55:13,00940,Comisión con comprobación pendiente de autorización
-2025-09-01 18:01:35,00941,Solicitud de comisión en registro
-2025-09-01 18:05:53,00943,Solicitud de comisión en registro
-2025-09-01 18:07:46,00944,Solicitud de comisión en registro
-2025-09-01 20:41:26,00945,Solicitud de comisión en registro
-2025-09-01 20:56:14,00946,Solicitud de comisión en registro
-2025-09-01 21:06:59,00948,Solicitud de comisión en registro
-2025-09-01 21:21:14,00949,Solicitud de comisión en registro
-2025-09-02 09:35:16,00950,Solicitud de comisión en registro
-2025-09-02 09:38:06,00951,Solicitud de comisión en registro
-2025-09-02 09:44:40,00953,Solicitud de comisión en registro
-2025-09-02 16:17:08,00955,Solicitud de comisión en registro
-2025-09-02 16:28:43,00956,Depósito en proceso
-2025-09-02 16:46:40,00957,Depósito en proceso
-2025-09-02 19:52:07,00958,Solicitud de comisión en registro
-2025-09-02 20:54:51,00959,Solicitud de comisión en registro
-2025-09-03 10:24:12,00960,Solicitud de comisión rechazada
-2025-09-03 10:28:47,00961,Solicitud de comisión en registro
-2025-09-03 10:32:27,00962,Solicitud de comisión en registro
-2025-09-03 10:44:03,00963,Solicitud de comisión en registro
-2025-09-03 10:47:23,00964,Solicitud de comisión en registro
-2025-09-03 17:34:46,00965,Comisión con reembolso en proceso
-2025-09-03 17:38:42,00966,Solicitud de comisión en registro
-2025-09-03 17:53:18,00967,Solicitud de comisión en registro
-2025-09-04 10:27:31,00968,Solicitud de comisión en registro
-2025-09-04 10:39:06,00969,Solicitud de comisión en registro
-2025-09-04 10:40:21,00970,Solicitud de comisión en registro
-2025-09-04 10:51:33,00972,Comisión pendiente de dotación
-2025-09-04 10:54:54,00973,Solicitud de comisión rechazada
-2025-09-04 10:57:02,00974,Solicitud de comisión en registro
-2025-09-04 11:23:34,00975,Solicitud de comisión rechazada
-2025-09-04 11:30:16,00976,Comisión pendiente de dotación
-2025-09-04 11:58:14,00977,Solicitud de comisión en registro
-2025-09-04 12:02:23,00978,Solicitud de comisión en registro
-2025-09-04 12:05:17,00979,Solicitud de comisión en registro
-2025-09-04 12:10:59,00981,Comisión con dotación autorizada
-2025-09-04 12:59:34,00982,Solicitud de comisión en registro
-2025-09-04 13:06:08,00984,Solicitud de comisión rechazada
-2025-09-05 10:37:54,00985,Comisión con comprobación pendiente de autorización
-2025-09-04 13:52:52,00986,Depósito en proceso
-2025-09-04 17:37:31,00987,Depósito en proceso
-2025-09-08 11:06:52,00988,Solicitud de comisión en registro
-2025-09-08 14:33:46,00989,Solicitud de comisión en registro
-2025-09-08 14:36:45,00991,Solicitud de comisión en registro
-2025-09-08 14:45:39,00992,Solicitud de comisión en registro
-2025-09-10 15:48:56,00993,Solicitud de comisión en registro
-2025-09-10 17:55:28,00994,Solicitud de comisión en registro,N/A
-2025-09-11 10:41:27,00998,Solicitud de comisión en registro,NACIONAL
-2025-09-15 11:14:30,00999,Solicitud de comisión en registro,MACIONAL,SIN ANTICIPO
+2025-11-19 10:45:36,00002,Comisión con comprobación pendiente de autorización,N/A,N/A
+2025-11-19 12:35:59,00004,Comisión con reembolso en proceso,N/A,N/A
+2025-11-19 13:53:30,00005,Solicitud de comisión en registro,MACIONAL,CON ANTICIPO
+2025-11-20 11:24:32,00008,Comisión con comprobación pendiente de autorización,N/A,N/A
+2025-11-19 17:03:46,00011,Solicitud de comisión en registro,MACIONAL,SIN ANTICIPO
+2025-11-20 10:21:54,00010,Comisión pendiente de dotación,N/A,N/A
+2025-11-20 11:33:00,00012,Solicitud de comisión en registro,INTERNACIONAL,CON ANTICIPO
+2025-11-20 13:47:49,00013,Comprobación autorizada a favor del comisionado,N/A,N/A
+2025-11-20 12:12:35,00014,Depósito en proceso,N/A,N/A
+2025-11-20 16:40:56,00015,Depósito en proceso,N/A,N/A
+2025-11-20 16:42:49,00016,Solicitud de comisión en registro,MACIONAL,ANTICIPO
+2025-11-20 16:50:18,00017,Solicitud de comisión en registro,MACIONAL,ANTICIPO
+2025-11-20 17:11:03,00018,Solicitud de comisión en registro,MACIONAL,SIN ANTICIPO
+2025-11-21 11:53:45,00993,Comisión con comprobación pendiente de autorización,N/A,N/A
+2025-11-21 12:00:41,00994,Comprobación autorizada a favor del comisionado,N/A,N/A
+2025-11-21 12:17:26,00995,Comprobación autorizada a favor del comisionado,N/A,N/A
+2025-11-23 10:53:47,00997,Depósito en proceso,N/A,N/A
+2025-11-23 11:08:55,00996,Depósito en proceso,N/A,N/A
+2025-11-23 11:10:19,00998,Solicitud de comisión en registro,MACIONAL,SIN ANTICIPO
+2025-11-23 13:28:57,00999,Solicitud de comisión en registro,MACIONAL,SIN ANTICIPO
+2025-11-23 13:35:51,01000,Solicitud de comisión en registro,MACIONAL,SIN ANTICIPO
+2025-11-24 09:55:12,01001,Solicitud de comisión pendiente de autorización,NACIONAL,CON ANTICIPO
+2025-11-23 17:36:50,01002,Solicitud de comisión en registro,MACIONAL,SIN ANTICIPO
+2025-11-23 17:58:47,01003,Solicitud de comisión en registro,MACIONAL,SIN ANTICIPO
+2025-11-23 20:09:09,01004,Depósito en proceso,NACIONAL,CON ANTICIPO
+2025-11-24 10:23:05,01005,Comprobación autorizada a favor del comisionado,N/A,N/A
+2025-11-24 11:02:59,01006,Comisión con reembolso en proceso,N/A,N/A
+2025-11-23 19:29:37,01007,Depósito en proceso,NACIONAL,CON ANTICIPO
+2025-11-24 11:22:40,01008,Comprobación autorizada a cargo del comisionado,N/A,N/A
+2025-11-24 12:09:57,01009,Comprobación autorizada a cargo del comisionado,N/A,N/A
+2025-11-23 20:18:03,01010,Comisión pendiente de dotación,NACIONAL,SIN ANTICIPO
+2025-11-24 10:00:10,00988,Solicitud de comisión en registro,NACIONAL,CON ANTICIPO
+2025-11-24 12:29:14,01014,Depósito en proceso,NACIONAL,CON ANTICIPO
+2025-11-24 12:36:37,01015,Depósito en proceso,NACIONAL,CON ANTICIPO
+2025-11-24 12:41:11,01016,Depósito en proceso,NACIONAL,CON ANTICIPO
+2025-11-24 13:10:08,01017,Comisión con reembolso en proceso,N/A,N/A
+2025-11-24 13:22:07,01018,Depósito en proceso,NACIONAL,CON ANTICIPO
+2025-11-24 17:48:16,00019,Solicitud de comisión en registro,NACIONAL,CON ANTICIPO
+2025-11-24 17:52:03,00020,Solicitud de comisión en registro,NACIONAL,CON ANTICIPO
+2025-11-24 18:19:42,00021,Solicitud de comisión en registro,NACIONAL,CON ANTICIPO
+2025-11-24 18:25:55,00022,Solicitud de comisión en registro,NACIONAL,CON ANTICIPO
+2025-11-24 20:41:25,00023,Solicitud de comisión en registro,NACIONAL,CON ANTICIPO
+2025-11-24 21:02:37,00024,Depósito en proceso,NACIONAL,CON ANTICIPO
+2025-11-24 21:09:03,00025,Comisión con dotación autorizada,NACIONAL,CON ANTICIPO
+2025-11-24 21:25:05,00026,Comisión con dotación autorizada,NACIONAL,CON ANTICIPO
+2025-11-24 21:37:40,00027,Depósito en proceso,NACIONAL,CON ANTICIPO
+2025-11-24 21:40:56,00028,Comisión pendiente de dotación,NACIONAL,CON ANTICIPO
+2025-11-24 21:48:03,00029,Solicitud de comisión en registro,NACIONAL,CON ANTICIPO
+2025-11-24 21:50:38,00030,Solicitud de comisión en registro,NACIONAL,CON ANTICIPO
+2025-11-24 21:57:26,00031,Solicitud de comisión en registro,NACIONAL,CON ANTICIPO
+2025-11-24 22:01:34,00032,Solicitud de comisión en registro,NACIONAL,CON ANTICIPO
+2025-11-24 22:20:11,00034,Depósito en proceso,NACIONAL,CON ANTICIPO
+2025-11-24 22:27:27,00035,Comisión con dotación autorizada,NACIONAL,CON ANTICIPO
+2025-11-24 22:47:16,00036,Solicitud de comisión pendiente de autorización,NACIONAL,CON ANTICIPO
+2025-11-24 22:56:02,00037,Solicitud de comisión pendiente de autorización,NACIONAL,CON ANTICIPO
+2025-11-25 10:34:21,00038,Comprobación autorizada a cargo del comisionado,N/A,N/A
+2025-11-24 23:11:06,00039,Solicitud de comisión en registro,NACIONAL,CON ANTICIPO
+2025-11-24 23:18:48,00040,Depósito en proceso,NACIONAL,CON ANTICIPO
+2025-11-24 23:20:17,00041,Solicitud de comisión en registro,NACIONAL,CON ANTICIPO
+2025-11-25 09:54:53,00042,Comisión con reembolso en proceso,N/A,N/A
+2025-11-25 09:36:42,00043,Depósito en proceso,NACIONAL,CON ANTICIPO
+2025-11-25 09:45:04,00044,Solicitud de comisión en registro,NACIONAL,CON ANTICIPO
+2025-11-25 11:10:23,00045,Solicitud de comisión en registro,NACIONAL,SIN ANTICIPO
+2025-11-25 11:18:32,00047,Depósito en proceso,NACIONAL,CON ANTICIPO
+2025-11-25 11:21:06,00048,Solicitud de comisión en registro,NACIONAL,SIN ANTICIPO
+2025-11-26 10:27:26,00050,Comprobación autorizada a cargo del comisionado,N/A,N/A
+2025-11-26 11:24:55,00051,Solicitud de comisión en registro,NACIONAL,SIN ANTICIPO
+2025-11-26 12:37:15,00054,Solicitud de comisión en registro,INTERNACIONAL,CON ANTICIPO
+2025-11-26 12:54:11,00055,Comisión con dotación autorizada,INTERNACIONAL,CON ANTICIPO
+2025-11-26 13:00:13,00057,Solicitud de comisión en registro,INTERNACIONAL,CON ANTICIPO
+2025-11-26 13:11:45,00058,Solicitud de comisión en registro,INTERNACIONAL,CON ANTICIPO
+2025-11-26 13:21:19,00059,Comisión con dotación autorizada,INTERNACIONAL,CON ANTICIPO
+2025-11-26 16:13:21,00060,Solicitud de comisión en registro,NACIONAL,SIN ANTICIPO
+2025-11-26 16:34:21,00062,Solicitud de comisión en registro,INTERNACIONAL,CON ANTICIPO
+2025-11-27 11:21:55,00063,Comisión con dotación autorizada,INTERNACIONAL,CON ANTICIPO
+2025-11-27 11:32:00,00064,Depósito en proceso,INTERNACIONAL,CON ANTICIPO
+2025-12-02 10:15:31,00065,Depósito en proceso,INTERNACIONAL,CON ANTICIPO
+2025-12-02 10:18:06,00066,Solicitud de comisión en registro,INTERNACIONAL,CON ANTICIPO
+2025-12-02 10:23:19,00067,Depósito en proceso,INTERNACIONAL,CON ANTICIPO
+2025-12-02 10:28:10,00068,Depósito en proceso,INTERNACIONAL,CON ANTICIPO
+2025-12-02 10:34:08,00069,Depósito en proceso,INTERNACIONAL,CON ANTICIPO

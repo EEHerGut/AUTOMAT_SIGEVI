@@ -1,0 +1,5 @@
+[behave]
+#format = allure_behave.formatter:AllureFormatter
+outfiles = reports/allure-results
+paths = features/steps
+steps_path = features/steps

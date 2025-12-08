@@ -28,14 +28,18 @@ def step_impl(context):
 @Then('Validar que la solicitud cuente con el estatus "{estatus}" editar solicitud')
 def step_impl(context,estatus):
         context.all_page.buscar_comision(NUMERO_COMISIÓN)
-        data = context.data["formularios"]['SOLICITUD_ANTICIPO']['anticipo']
-        anticipo=context.all_page.anticipo(data)
-
+        ##data = context.data["formularios"]['SOLICITUD_ANTICIPO']['anticipo']
+        ##anticipo=context.all_page.validar_anticipo()
+        tipo_comision=context.all_page.validar_tipo_comisión()
+        tipo_anticipo=context.all_page.validar_anticipo()
+        
         time.sleep(0.5)
         record_data = {
                 'column': 'Estado ',
                 'registro': estatus,
-                'num': NUMERO_COMISIÓN
+                'num': NUMERO_COMISIÓN,
+                'nac/inter': tipo_comision,
+                'anticipo': tipo_anticipo
                 }
 
         assert context.comision_page.validar_grid(record_data), \

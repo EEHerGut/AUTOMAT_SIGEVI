@@ -49,10 +49,35 @@ def before_all(context):
     
     context.logger.addHandler(file_handler)
     context.logger.addHandler(console_handler)
-    context.logger.info("[TEST] 🚀 Inicializando configuración global...")
+    context.logger.info("[TEST] - Inicializando configuración global...")
+
+    """     # === CARGAR STEPS DE SUBCARPETAS ===
+    features_dir = os.path.dirname(__file__)
+    steps_dir = os.path.join(features_dir, 'steps')
+
+     # Recorrer e importar todos los steps
+    for root, dirs, files in os.walk(steps_dir):
+        # Agregar al path
+        if root not in sys.path:
+            sys.path.append(root)
+            
+    # Importar archivos Python
+        for file in files:
+            if file.endswith('.py') and not file.startswith('__'):
+                file_path = os.path.join(root, file)
+                relative_path = os.path.relpath(file_path, steps_dir)
+                module_name = relative_path.replace(os.sep, '.')[:-3]  # Quitar .py
+                
+                try:
+                    __import__(f"steps.{module_name}")
+                    context.logger.info(f"[STEPS] ✅ Cargado: steps.{module_name}")
+                except Exception as e:
+                    context.logger.error(f"[STEPS] ❌ Error: {e}")"""
 
     chrome_options = Options()
     chrome_options.add_argument("--start-maximized")
+    chrome_options.add_argument("--disable-application-cache")  # ✅ Deshabilitar cache
+   
     chrome_options.set_capability('goog:loggingPrefs', {'performance': 'ALL'})
 
     # Configuración automática del driver
@@ -69,10 +94,11 @@ def before_scenario(context, scenario):
     context.data = {
         "roles": load_json("roles.json"),
         "formularios": load_json("formularios.json"),
-        "entornos": load_json("entornos.json")
+        "entornos": load_json("entornos.json"),
+        "catalogos": load_json("catalogos.json")
     }
 
-    context.logger.info(f"[TEST] 📌 Iniciando escenario: {scenario.name}")
+    context.logger.info(f"[TEST]  Iniciando escenario: {scenario.name}")
  
 
     # Verifica si el usuario ya está logueado
@@ -99,7 +125,7 @@ def after_scenario(context, scenario):
      # Log y almacenamiento
     
     if elapsed_seconds > 5:  # Ajusta el valor según tu SLA
-        context.logger.warning(f"[PERFORMANCE] ⏱️🚨 ALERTA: El escenario '{scenario.name}' tardó {elapsed_seconds}s (más de 5s)")
+        context.logger.warning(f"[PERFORMANCE]  ALERTA: El escenario '{scenario.name}' tardó {elapsed_seconds}s (más de 5s)")
     else:
         context.logger.info(f"[PERFORMANCE] ⏱️ Escenario '{scenario.name}' tomó {elapsed_seconds}s")
 

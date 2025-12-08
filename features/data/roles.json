@@ -1,20 +1,26 @@
 {
   "OPERADOR_SIGEVI": {
     "usuario": "mainc044",
-    "password": "B@40bR4$1607202$",
+    "password": "Banobras21102025",
     "rol": "Operador SIGEVI",
     "dashboard_url": "/operador/dashboard"
   },
   "AUTORIZADOR_SIGEVI": {
     "usuario": "mainc044",
-    "password": "B@40bR4$1607202$",
+    "password": "Banobras21102025",
     "rol": "Autorizador SIGEVI",
     "dashboard_url": "/autorizador/dashboard"
   },
     "AUTORIZADOR_AVIÓN": {
-    "usuario": "mainc048",
-    "password": "B@40bR4$1607202$",
+    "usuario": "mainc044",
+    "password": "Banobras21102025",
     "rol": "Autorizador de boletos de avión",
+    "dashboard_url": "/autorizador/dashboard"
+  },
+    "ADMINISTRADOR": {
+    "usuario": "mainc044",
+    "password": "Banobras21102025",
+    "rol": "Administrador SIGEVI",
     "dashboard_url": "/autorizador/dashboard"
   }
 }

@@ -7,8 +7,7 @@ import time
 @given('Visualizar el grid de comisiones enviar al área de pagos con estatus "{estatus}"')
 def step_impl(context,estatus):
      
-     context.logger.info(f"[ESTATUS] 🚀 {estatus}")
-     context.logger.info(f"[ESTATUS_COMISIÓN] 🚀 {ESTATUS_COMISIÓN}")
+
      context.all_page = AllPage(context.driver)
      context.envio_page = EnvioPage(context.driver)
      context.all_page.menu_comision()
@@ -29,20 +28,7 @@ def step_impl(context):
 @then('Validar que la solicitud cuente con el estatus "{estatus}"')
 def step_impl(context,estatus):
 
-    context.all_page.buscar_comision(NUMERO_COMISIÓN)
-    time.sleep(0.5)
-    mundo=context.all_page.validar_comisión()
-    if mundo:
-     Var="INTERNACIONAL"
-    else:    
-     Var="NACIONAL"
-
-    record_data = {
-            'column': 'Estado ',
-            'registro': estatus,
-            'num': NUMERO_COMISIÓN,
-            'nac/inter': Var
-        }
+    record_data=context.all_page.registro_txt(NUMERO_COMISIÓN,estatus)
 
     assert context.envio_page.validar_grid(record_data), \
                 f"El registro estado con registro Solicitud de comisión pendiente de autorización no apareció en el grid"

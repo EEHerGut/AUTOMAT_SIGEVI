@@ -1,0 +1,12 @@
+@regression @catalogo_estados
+Feature: Alta de estado # features/Comision/Administrador/Estado_Admin.feature:2
+
+  @smoke @login @administrador
+  Scenario: Login                                             # features/Comision/Administrador/Estado_Admin.feature:5
+    Given Inicio sesion como "ADMINISTRADOR"                  # features/steps/login.py:9
+    Then El sistema nos permite visualizar el panel principal # features/steps/login.py:27
+
+  @regression @estado @modificar
+  Scenario: Modificar estado                                                                            # features/Comision/Administrador/Estado_Admin.feature:10
+    Given Seleccionar el menu Configuracion - Catalogos - "Estado-municipio/ciudad (NAL)" EDITAR ESTADO # features/steps/Catalogos/ADM_CP_Estado_Modificar.py:7
+    When Buscar el estado y editar                                                                      # features/steps/Catalogos/ADM_CP_Estado_Modificar.py:16
