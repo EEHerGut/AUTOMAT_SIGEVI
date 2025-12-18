@@ -1,5 +1,5 @@
 from behave import *
-from config import GASTO,NUMERO_COMISIÓN
+from config import NUMERO_COMISIÓN
 from pages.gasto_page import GastosPage
 from pages.all_page import AllPage
 
@@ -15,11 +15,14 @@ def step_impl(context,estatus):
 def step_impl(context):
     context.gasto_page.seleccionar_menu_gastos()
 @When('Dar clic en el botón Agregar gasto, seleccionar tipo de gasto, monto y dar clic en agregar')
-def step_impl(context):
+def step_impl(context): 
+
+    concepto = context.data["formularios"]['GASTO']['concept']
+    monto = context.data["formularios"]['GASTO']['amount']
 
     context.gasto_page.click_agregar_gasto()
-    context.gasto_page.seleccionar_tipo_gasto(GASTO['concept'])    
-    context.gasto_page.agregar_monto(GASTO['amount'])
+    context.gasto_page.seleccionar_tipo_gasto(concepto)    
+    context.gasto_page.agregar_monto(monto)
     context.gasto_page.guardar_gasto()
     
     
