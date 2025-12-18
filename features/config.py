@@ -35,7 +35,7 @@ ARCHIVOS = {
 #Comisión pendiente de comprobación
 #Solicitud de comisión pendiente de autorización
 
-NUMERO_COMISIÓN = '00065'
+NUMERO_COMISIÓN = '00076'
 ESTATUS_COMISIÓN = 'Solicitud de comisión en registro'
 ID_SOLICITUD= '00985'
 ID_FACTURA= '863'
@@ -45,13 +45,13 @@ ID_FACTURA= '863'
 #mainc048 - mainc044 - uedga193
 USUARIOS = {
     "OPERADOR_SIGEVI": {
-        "usuario": "mainc044",
-        "password": "Banobras21102025",
+        "usuario": "mainc049",
+        "password": "Banobras17122025",
         "rol": "Operador SIGEVI"
     },
     "Autorizador_SIGEVI": {
-        "usuario": "mainc044",
-        "password": "Banobras21102025",
+        "usuario": "mainc049",
+        "password": "Banobras17122025",
         "rol": "Autorizador SIGEVI"
     }
 }
