@@ -23,7 +23,7 @@ class ComisionPage(BasePage):
     BOTON_GUARDAR = (By.XPATH, "//app-new-commission//button[contains(text(), 'Guardar') or contains(text(), 'Guardar')]")
     BOTON_CONFIRMAR_GUARDAR = (By.XPATH, "//*[@id='confirmModal']/div/div/div[3]/button[2]")
     MODAL_EXITO = (By.XPATH, "//*[@id='resultModal']/div/div/div[1]/h4")
-    BOTON_CERRAR_MODAL = (By.XPATH, "//*[@id='resultModal']/div/div/div[3]/button")
+    BOTON_CERRAR_MODAL = (By.XPATH, "//button[normalize-space()='Cerrar']")
     INPUT_DIAS = (By.XPATH,"//input[@type='number' and @formcontrolname='daysAvailable']")
     NUMERO_OFICIO = (By.XPATH,"//input[@formcontrolname='officeNumber']")
     EXPEDIENTE_AUTORIZA=(By.XPATH,"//input[@formcontrolname='authorizerExp']")
